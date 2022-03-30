@@ -31,6 +31,8 @@ public class JumpboyControl : MonoBehaviour
 	//física do jogo
 	void FixedUpdate()
 	{
+		//movimento horizontal
+		
 		//carregando o pulo
 		//fora do if(landed) pra servir como buffer
 		if(jump_holding)
