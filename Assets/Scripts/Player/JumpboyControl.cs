@@ -8,6 +8,8 @@ public class JumpboyControl : MonoBehaviour
 	
 	bool landed = true;//se o jogador está no chão
 	
+	int lives = 2;//vidas do jogador
+	
 	#region jump
 	bool jump_holding;//se o player está carregando um pulo
 	float jump_charge, max_jump_charge;//carga do pulo atual e máxima
