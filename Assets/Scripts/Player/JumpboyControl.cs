@@ -34,6 +34,7 @@ public class JumpboyControl : MonoBehaviour
 	void FixedUpdate()
 	{
 		//movimento horizontal
+		transform.Translate(0.2f, 0, 0);
 		
 		//carregando o pulo
 		//fora do if(landed) pra servir como buffer
