@@ -8,6 +8,9 @@ TextureImporter:
   - first:
       213: -3279967489551928245
     second: ceu
+  - first:
+      213: 1268540063769580656
+    second: ceu sem nuvem
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -134,7 +137,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 75
-        y: 104
+        y: 105
         width: 1245
         height: 275
       alignment: 7
@@ -146,6 +149,27 @@ TextureImporter:
       bones: []
       spriteID: b447d6e32f63b72d0800000000000000
       internalID: -3279967489551928245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ceu sem nuvem
+      rect:
+        serializedVersion: 2
+        x: 1218
+        y: 285
+        width: 124
+        height: 108
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 074565c8772ca9110800000000000000
+      internalID: 1268540063769580656
       vertices: []
       indices: 
       edges: []

@@ -23,7 +23,7 @@ public class CameraControl : MonoBehaviour
 		Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, camSpd);
 		
 		//muda a posição da camera
-		transform.position = smoothedPos;
+		transform.position = new Vector3(smoothedPos.x, offset.y, offset.z);
 		
 		//se for a versão 3D
 		//talvez seja trocado por uma rotação base inicial que não muda
