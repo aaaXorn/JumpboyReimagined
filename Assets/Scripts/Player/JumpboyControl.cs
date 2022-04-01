@@ -10,6 +10,7 @@ public class JumpboyControl : MonoBehaviour
 	
 	int lives = 2;//vidas do jogador
 	bool hurt;//enquanto o jogador toma um hit
+	[SerializeField] float hurt_time, max_hurt_time;//tempo atual e máximo na animação de dano
 	
 	[SerializeField] Vector3 BaseVelocity;//velocidade do jumpboy correndo
 	float ground_dist, land_ray_height = 0.1f;//raycast do pulo
@@ -45,9 +46,6 @@ public class JumpboyControl : MonoBehaviour
 	//física do jogo
 	void FixedUpdate()
 	{
-		//movimento horizontal
-		
-		
 		//carregando o pulo
 		//fora do if(landed) pra servir como buffer
 		if(jump_holding)
@@ -61,6 +59,34 @@ public class JumpboyControl : MonoBehaviour
 			{
 				//timer
 				jump_charge += Time.deltaTime;
+			}
+		}
+		
+		//se tomou dano
+		if(hurt)
+		{
+			if(lives > 0)//continua vivo
+			{
+				if(hurt_time <= 0)
+				{
+					//deixa o jogador parado, talvez mude
+					rigid.velocity = new Vector3(0, 0, 0);
+				}
+				else if(hurt_time >= max_hurt_time)
+				{
+					//volta ao normal
+					hurt = false;
+					rigid.velocity = BaseVelocity;
+				}
+				hurt_time += Time.deltaTime;
+				
+				//cancela o resto do update
+				//player ainda pode dar buffer de um high jump
+				return;
+			}
+			else//morre
+			{
+				
 			}
 		}
 		
@@ -127,4 +153,24 @@ public class JumpboyControl : MonoBehaviour
 		sliding = false;
 	}
 	#endregion
+	
+	void OnTriggerEnter(Collider other)
+	{
+		//se for um obstaculo
+		if(other.gameObject.CompareTag("Hazard"))
+		{
+			//desativa o obstaculo
+			other.GetComponent<Collider>().enabled = false;
+			
+			//deixa a cor do obstaculo transparente
+			//indica que o obstaculo foi desativado
+			Color color = other.GetComponent<SpriteRenderer>().color;
+			color.a = 0.5f;
+			other.GetComponent<SpriteRenderer>().color = color;
+			
+			lives--;
+			hurt_time = 0;
+			hurt = true;
+		}
+	}
 }
