@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 public class JumpboyControl : MonoBehaviour
 {
 	Rigidbody rigid;
+	[SerializeField] Rigidbody rigid_police;//rigidbody do policial que segue o player
+	[SerializeField] Transform transf_police, transf_target;//transform do alvo
+	//velocidade exponencial pra baixo quando toma hit
+	[SerializeField] float init_vel, end_vel, vel_hurt_time_mod;//vel_change;
 	
 	bool landed = true;//se o jogador está no chão
 	
@@ -42,6 +46,7 @@ public class JumpboyControl : MonoBehaviour
 		
 		//movimento horizontal
 		rigid.velocity = BaseVelocity;
+		rigid_police.velocity = BaseVelocity;
     }
 	
 	//física do jogo
@@ -72,13 +77,23 @@ public class JumpboyControl : MonoBehaviour
 				{
 					//deixa o jogador parado, talvez mude
 					rigid.velocity = new Vector3(0, 0, 0);
+					rigid_police.velocity = new Vector3(0, 0, 0);
 				}
 				else if(hurt_time >= max_hurt_time)
 				{
 					//volta ao normal
 					hurt = false;
 					rigid.velocity = BaseVelocity;
+					rigid_police.velocity = BaseVelocity;
 				}
+				
+				//socorro matematica
+				float change = Mathf.SmoothStep(init_vel, end_vel, hurt_time / (max_hurt_time - vel_hurt_time_mod));
+				//muda a posição do alvo da camera
+				transf_target.Translate(Vector3.right * change);
+				//muda a posição do policial
+				transf_police.Translate(Vector3.right * change);
+				
 				hurt_time += Time.deltaTime;
 				
 				//cancela o resto do update
