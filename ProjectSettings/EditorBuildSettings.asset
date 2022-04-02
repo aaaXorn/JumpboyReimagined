@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Jumpboy2D.unity
+    guid: b76ce052425aa0b42b63e3ea072f6ffc
+  - enabled: 1
+    path: Assets/Scenes/Jumpboy3D.unity
+    guid: de9ed34a34eb37d4b948f43974ab3064
   m_configObjects: {}

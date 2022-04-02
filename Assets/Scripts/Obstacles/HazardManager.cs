@@ -6,9 +6,8 @@ public class HazardManager : MonoBehaviour
 {
 	//tempo de spawn atual e maximo
 	[SerializeField] float spawn_time, total_spawn_time;
-	//spawn time modifier que varia com o obstaculo?
-	
-	//fazer o spawn time diminuir com o tempo?
+	//modifier do spawn_time que varia com o tempo
+	[SerializeField] float spawn_time_mod, spawn_time_add;//add é o valor somado, mod é o atual
 	
 	[Header("Backgrounds")]//objetos spawnados no background
 	[SerializeField] GameObject[] bg_obj;
@@ -36,9 +35,10 @@ public class HazardManager : MonoBehaviour
 			Instantiate(hazards[no], SpawnPos.position, transform.rotation);
 			
 			//reseta o timer
-			spawn_time = total_spawn_time;
+			spawn_time = total_spawn_time - spawn_time_mod;
 			
 			//matematica pra lentamente diminuir o spawn_time
+			spawn_time_mod += (spawn_time_mod < total_spawn_time / 2) ? spawn_time_add : 0;
 		}
     }
 	

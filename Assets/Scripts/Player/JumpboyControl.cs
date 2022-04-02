@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class JumpboyControl : MonoBehaviour
 {
@@ -86,7 +87,10 @@ public class JumpboyControl : MonoBehaviour
 			}
 			else//morre
 			{
+				//animação, timer etc
 				
+				//recarrega a scene atual
+				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 			}
 		}
 		

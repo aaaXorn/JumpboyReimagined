@@ -16,17 +16,26 @@ public class CameraControl : MonoBehaviour
     {
 		//posição desejada
 		Vector3 desiredPos = target.position + offset;
+		Vector3 smoothedPos;
 		
-		//velocidade da camera
-		float camSpd = smoothSpd * Time.deltaTime;
-		//determina a posição final da camera nesse frame
-		Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, camSpd);
+		if(_3D)
+		{
+			//velocidade da camera
+			float camSpd = smoothSpd * Time.deltaTime;
+			//determina a posição final da camera nesse frame
+			smoothedPos = Vector3.Lerp(transform.position, desiredPos, camSpd);
+			
+			//rotaciona a camera
+			//talvez seja trocado por uma rotação base inicial que não muda
+			transform.LookAt(target);//rotaciona a camera na direção do player
+		}
+		else
+		{
+			//muda a posição da camera
+			smoothedPos = desiredPos;
+		}
 		
 		//muda a posição da camera
 		transform.position = new Vector3(smoothedPos.x, offset.y, offset.z);
-		
-		//se for a versão 3D
-		//talvez seja trocado por uma rotação base inicial que não muda
-		if(_3D) transform.LookAt(target);//rotaciona a camera na direção do player
     }
 }
