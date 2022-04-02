@@ -10,8 +10,11 @@ public class HazardManager : MonoBehaviour
 	
 	//fazer o spawn time diminuir com o tempo?
 	
+	[Header("Backgrounds")]//objetos spawnados no background
+	[SerializeField] GameObject[] bg_obj;
+	
 	[Header("Obstaculos")]//obstaculos spawnados
-	[SerializeField] GameObject placeholder;
+	[SerializeField] GameObject[] hazards;
 	[SerializeField] Transform SpawnPos;//posição que os obstaculos spawnam
 	
     void Start()
@@ -27,9 +30,10 @@ public class HazardManager : MonoBehaviour
 		if(spawn_time <= 0)
 		{
 			//aleatoriza o próximo obstaculo
+			int no = Random.Range(0, hazards.Length);
 			
 			//cria um novo obstaculo
-			Instantiate(placeholder, SpawnPos.position, transform.rotation);
+			Instantiate(hazards[no], SpawnPos.position, transform.rotation);
 			
 			//reseta o timer
 			spawn_time = total_spawn_time;
@@ -40,8 +44,20 @@ public class HazardManager : MonoBehaviour
 	
 	void OnTriggerEnter(Collider other)
 	{
+		print("trigger");
 		//destroi o obstaculo quando ele passa de um ponto fora da tela
 		if(other.gameObject.CompareTag("Hazard"))
 			Destroy(other.gameObject);
+		//destroy o objeto de BG e cria um novo
+		else if(other.gameObject.CompareTag("Background"))
+		{
+			Destroy(other.gameObject);
+			
+			//aleatoriza um obj de background
+			int no = Random.Range(0, bg_obj.Length);
+			
+			//cria o obj de background
+			Instantiate(bg_obj[no], SpawnPos.position, transform.rotation);
+		}
 	}
 }

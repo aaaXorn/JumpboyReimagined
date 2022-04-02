@@ -160,7 +160,7 @@ public class JumpboyControl : MonoBehaviour
 		if(other.gameObject.CompareTag("Hazard"))
 		{
 			//desativa o obstaculo
-			other.GetComponent<Collider>().enabled = false;
+			other.transform.position += new Vector3(0, 0, 5);
 			
 			//deixa a cor do obstaculo transparente
 			//indica que o obstaculo foi desativado
