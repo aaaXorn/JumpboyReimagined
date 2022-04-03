@@ -37,6 +37,8 @@ public class HazardManager : MonoBehaviour
 			//reseta o timer
 			spawn_time = total_spawn_time - spawn_time_mod;
 			
+			//? substituir por um aumento da velocidade dos obstaculos
+			//? adicionar os dois
 			//matematica pra lentamente diminuir o spawn_time
 			spawn_time_mod += (spawn_time_mod < total_spawn_time / 2) ? spawn_time_add : 0;
 		}
