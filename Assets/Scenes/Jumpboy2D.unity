@@ -417,8 +417,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -447, y: -380}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 845, y: 240}
+  m_SizeDelta: {x: 42.3, y: 82.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &247903861
 MonoBehaviour:
@@ -1055,7 +1055,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Slide
 --- !u!222 &1287518904
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1345,6 +1345,7 @@ MonoBehaviour:
   - {fileID: 6627718378143860000, guid: 7f40a30fa69852e4ab5d775f5c252595, type: 3}
   hazards:
   - {fileID: 6627718378143860000, guid: 7f40a30fa69852e4ab5d775f5c252595, type: 3}
+  - {fileID: 8882510855016559127, guid: 45e5a163539c2374a983e41cf829fdf4, type: 3}
   SpawnPos: {fileID: 1588039439}
 --- !u!54 &1690847118
 Rigidbody:
@@ -1602,8 +1603,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 518, y: -380}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 845, y: -226}
+  m_SizeDelta: {x: 42.5, y: 87.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1985592046
 MonoBehaviour:
@@ -1657,11 +1658,11 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.8301887, g: 0.20754717, b: 0.20754717, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -1757,8 +1758,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001538262}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.44, z: 0}
+  m_LocalScale: {x: 8, y: 8, z: 1}
   m_Children:
   - {fileID: 101061964}
   m_Father: {fileID: 0}
@@ -1775,8 +1776,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.125, y: 0.175, z: 1}
+  m_Center: {x: 0, y: 0.0875, z: 0}
 --- !u!114 &2001538265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1798,6 +1799,7 @@ MonoBehaviour:
   hurt_time: 0
   max_hurt_time: 1.5
   BaseVelocity: {x: 10, y: 0, z: 0}
+  land_ray_height: 0.2
   jump_charge: 0
   max_jump_charge: 1
   jump_base_force: 6
@@ -1831,8 +1833,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.79604506, z: 1}
-  m_Center: {x: 0, y: 0.90210927, z: 0}
+  m_Size: {x: 0.125, y: 0.15, z: 1}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!212 &2001538268
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1873,8 +1875,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -7023005510415628275, guid: ff227436f267f564fbca41d2a32551be, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1954,7 +1956,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Jump
 --- !u!222 &2057231663
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -30,7 +30,7 @@ public class HazardManager : MonoBehaviour
 		{
 			//aleatoriza o próximo obstaculo
 			int no = Random.Range(0, hazards.Length);
-			
+			print(no);
 			//cria um novo obstaculo
 			Instantiate(hazards[no], SpawnPos.position, transform.rotation);
 			
@@ -44,7 +44,6 @@ public class HazardManager : MonoBehaviour
 	
 	void OnTriggerEnter(Collider other)
 	{
-		print("trigger");
 		//destroi o obstaculo quando ele passa de um ponto fora da tela
 		if(other.gameObject.CompareTag("Hazard"))
 			Destroy(other.gameObject);

@@ -18,7 +18,7 @@ public class JumpboyControl : MonoBehaviour
 	[SerializeField] float hurt_time, max_hurt_time;//tempo atual e máximo na animação de dano
 	
 	[SerializeField] Vector3 BaseVelocity;//velocidade do jumpboy correndo
-	float ground_dist, land_ray_height = 0.1f;//raycast do pulo
+	[SerializeField] float land_ray_height = 0.2f;//raycast do pulo
 	bool grounded;//se o player está no chão
 	
 	#region jump
@@ -40,9 +40,6 @@ public class JumpboyControl : MonoBehaviour
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
-		
-		//determina a distância até o chão
-		ground_dist = body_col.bounds.extents.y + land_ray_height;
 		
 		//movimento horizontal
 		rigid.velocity = BaseVelocity;
@@ -110,8 +107,8 @@ public class JumpboyControl : MonoBehaviour
 		}
 		
 		//checa se o jogador está no chão com raycast
-		landed = Physics.Raycast(transform.position, -Vector3.up, ground_dist);
-		Debug.DrawRay(transform.position, -Vector3.up * ground_dist, Color.red);
+		landed = Physics.Raycast(transform.position + (Vector3.up * 0.1f), -Vector3.up, land_ray_height);
+		Debug.DrawRay(transform.position, -Vector3.up * land_ray_height, Color.red);
 		print(landed);
 		
 		//se o jogador está no chão
