@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: 36db55f66d44e43409d377881757e8ed
+guid: 88d71b0194998fe4b814cdd66c716b7f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5658449081305426274
-    second: dinheiro_spritesheet_jumpboy_0
+      213: -4046734702685988172
+    second: jumpBoy_jumping_0
   - first:
-      213: 7913999312212152028
-    second: dinheiro_spritesheet_jumpboy_1
+      213: -2972533107315226720
+    second: jumpBoy_jumping_1
   - first:
-      213: -6668470665820485937
-    second: dinheiro_spritesheet_jumpboy_2
+      213: -5596663969347232414
+    second: jumpBoy_jumping_2
   - first:
-      213: -2922897098997420745
-    second: dinheiro_spritesheet_jumpboy_3
+      213: 8611047772640602495
+    second: jumpBoy_jumping_3
   - first:
-      213: 6795986989075415997
-    second: dinheiro_spritesheet_jumpboy_4
+      213: -3256079783733635770
+    second: jumpBoy_jumping_4
   - first:
-      213: -1478607360638994870
-    second: dinheiro_spritesheet_jumpboy_5
+      213: -5880331001364232913
+    second: jumpBoy_jumping_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -64,7 +64,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 20
+  spritePixelsToUnits: 10
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,155 +117,131 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dinheiro_spritesheet_jumpboy_0
+      name: jumpBoy_jumping_0
       rect:
         serializedVersion: 2
         x: 4
-        y: 24
-        width: 5
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 0
+        width: 15
+        height: 32
+      alignment: 9
+      pivot: {x: 0.53333336, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26968dea579d68e40800000000000000
-      internalID: 5658449081305426274
+      spriteID: 4bad72a7a3c17d7c0800000000000000
+      internalID: -4046734702685988172
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dinheiro_spritesheet_jumpboy_1
+      name: jumpBoy_jumping_1
       rect:
         serializedVersion: 2
-        x: 23
-        y: 24
-        width: 5
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 20
+        y: 0
+        width: 22
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cde471db17c24dd60800000000000000
-      internalID: 7913999312212152028
+      spriteID: 0a7436753e07fb6d0800000000000000
+      internalID: -2972533107315226720
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dinheiro_spritesheet_jumpboy_2
+      name: jumpBoy_jumping_2
       rect:
         serializedVersion: 2
-        x: 3
-        y: 15
-        width: 7
-        height: 5
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 45
+        y: 0
+        width: 26
+        height: 32
+      alignment: 9
+      pivot: {x: 0.42307693, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc648a0b245d473a0800000000000000
-      internalID: -6668470665820485937
+      spriteID: 26d94d3b5c7a452b0800000000000000
+      internalID: -5596663969347232414
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dinheiro_spritesheet_jumpboy_3
+      name: jumpBoy_jumping_3
       rect:
         serializedVersion: 2
-        x: 21
-        y: 13
-        width: 5
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 74
+        y: 0
+        width: 28
+        height: 32
+      alignment: 9
+      pivot: {x: 0.46428573, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73d2d3b1398cf67d0800000000000000
-      internalID: -2922897098997420745
+      spriteID: f7969207356908770800000000000000
+      internalID: 8611047772640602495
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dinheiro_spritesheet_jumpboy_4
+      name: jumpBoy_jumping_4
       rect:
         serializedVersion: 2
-        x: 3
-        y: 3
-        width: 5
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 107
+        y: 0
+        width: 26
+        height: 32
+      alignment: 9
+      pivot: {x: 0.42307693, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db3440ee822305e50800000000000000
-      internalID: 6795986989075415997
+      spriteID: 645d93a20b410d2d0800000000000000
+      internalID: -3256079783733635770
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dinheiro_spritesheet_jumpboy_5
+      name: jumpBoy_jumping_5
       rect:
         serializedVersion: 2
-        x: 21
-        y: 4
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 138
+        y: 0
+        width: 22
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a46b5d2807eea7be0800000000000000
-      internalID: -1478607360638994870
+      spriteID: f25c7fd0c1ed46ea0800000000000000
+      internalID: -5880331001364232913
       vertices: []
       indices: 
       edges: []
@@ -273,7 +249,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 0259ee07e884cb54a96dc45ee0271c72
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 

@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class JumpboyControl : MonoBehaviour
 {
+	[Header("Velocity and Misc")]
 	Rigidbody rigid;
+	Animator anim;
 	[SerializeField] Rigidbody rigid_police;//rigidbody do policial que segue o player
 	[SerializeField] Transform transf_police, transf_target;//transform do alvo
 	//velocidade exponencial pra baixo quando toma hit
@@ -14,9 +16,10 @@ public class JumpboyControl : MonoBehaviour
 	bool landed = true;//se o jogador está no chão
 	
 	int lives = 2;//vidas do jogador
-	bool hurt;//enquanto o jogador toma um hit
+	public bool hurt;//enquanto o jogador toma um hit
 	[SerializeField] float hurt_time, max_hurt_time;//tempo atual e máximo na animação de dano
 	
+	[Header("Movement Actions")]
 	[SerializeField] Vector3 BaseVelocity;//velocidade do jumpboy correndo
 	[SerializeField] float land_ray_height = 0.2f;//raycast do pulo
 	bool grounded;//se o player está no chão
@@ -33,7 +36,6 @@ public class JumpboyControl : MonoBehaviour
 	
 	[SerializeField]
 	Collider head_col;//collider da cabeça, desabilitado durante o slide
-	[SerializeField] Collider body_col;//collider do corpo
 	#endregion
 	
     //inicializa variáveis
@@ -44,6 +46,8 @@ public class JumpboyControl : MonoBehaviour
 		//movimento horizontal
 		rigid.velocity = BaseVelocity;
 		rigid_police.velocity = BaseVelocity;
+		
+		anim = GetComponent<Animator>();
     }
 	
 	//física do jogo
@@ -119,8 +123,9 @@ public class JumpboyControl : MonoBehaviour
 			{
 				//tira a hurtbox da cabeça
 				if(head_col.enabled) head_col.enabled = false;
-				
-				
+
+				//reseta o timer do pulo
+				jump_charge = 0;
 			}
 			//idle e pulo
 			else
@@ -141,6 +146,9 @@ public class JumpboyControl : MonoBehaviour
 				}
 			}
 		}
+		
+		//determina a animação de pulo/andar
+		anim.SetFloat("vel_Y", rigid.velocity.y);
 	}
 	
 	#region buttons

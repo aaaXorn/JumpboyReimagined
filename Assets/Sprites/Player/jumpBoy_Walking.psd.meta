@@ -1,25 +1,31 @@
 fileFormatVersion: 2
-guid: 36db55f66d44e43409d377881757e8ed
+guid: b6903d64d1e6b6e438610a5a78ed921d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5658449081305426274
-    second: dinheiro_spritesheet_jumpboy_0
+      213: 7074060751268318688
+    second: jumpBoy_Walking_0
   - first:
-      213: 7913999312212152028
-    second: dinheiro_spritesheet_jumpboy_1
+      213: 4961923746991584890
+    second: jumpBoy_Walking_1
   - first:
-      213: -6668470665820485937
-    second: dinheiro_spritesheet_jumpboy_2
+      213: 5316924444456054515
+    second: jumpBoy_Walking_2
   - first:
-      213: -2922897098997420745
-    second: dinheiro_spritesheet_jumpboy_3
+      213: -7453994754703643116
+    second: jumpBoy_Walking_3
   - first:
-      213: 6795986989075415997
-    second: dinheiro_spritesheet_jumpboy_4
+      213: 5632238857064081356
+    second: jumpBoy_Walking_4
   - first:
-      213: -1478607360638994870
-    second: dinheiro_spritesheet_jumpboy_5
+      213: -7193535184365607158
+    second: jumpBoy_Walking_5
+  - first:
+      213: 3716965992142808343
+    second: jumpBoy_Walking_6
+  - first:
+      213: 980086411148346515
+    second: jumpBoy_Walking_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -64,7 +70,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 20
+  spritePixelsToUnits: 10
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,155 +123,173 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dinheiro_spritesheet_jumpboy_0
+      name: jumpBoy_Walking_0
       rect:
         serializedVersion: 2
         x: 4
-        y: 24
-        width: 5
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 0
+        width: 15
+        height: 32
+      alignment: 9
+      pivot: {x: 0.53333336, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26968dea579d68e40800000000000000
-      internalID: 5658449081305426274
+      spriteID: 0ed81e6f5cc1c2260800000000000000
+      internalID: 7074060751268318688
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dinheiro_spritesheet_jumpboy_1
+      name: jumpBoy_Walking_1
       rect:
         serializedVersion: 2
-        x: 23
-        y: 24
-        width: 5
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 27
+        y: 0
+        width: 26
+        height: 32
+      alignment: 9
+      pivot: {x: 0.42307693, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cde471db17c24dd60800000000000000
-      internalID: 7913999312212152028
+      spriteID: a763206cb5b4cd440800000000000000
+      internalID: 4961923746991584890
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dinheiro_spritesheet_jumpboy_2
+      name: jumpBoy_Walking_2
       rect:
         serializedVersion: 2
-        x: 3
-        y: 15
-        width: 7
-        height: 5
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 57
+        y: 0
+        width: 33
+        height: 32
+      alignment: 9
+      pivot: {x: 0.3939394, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc648a0b245d473a0800000000000000
-      internalID: -6668470665820485937
+      spriteID: 3fee469ac9289c940800000000000000
+      internalID: 5316924444456054515
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dinheiro_spritesheet_jumpboy_3
+      name: jumpBoy_Walking_3
       rect:
         serializedVersion: 2
-        x: 21
-        y: 13
-        width: 5
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 94
+        y: 0
+        width: 26
+        height: 32
+      alignment: 9
+      pivot: {x: 0.42307693, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73d2d3b1398cf67d0800000000000000
-      internalID: -2922897098997420745
+      spriteID: 41ea34873471e8890800000000000000
+      internalID: -7453994754703643116
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dinheiro_spritesheet_jumpboy_4
+      name: jumpBoy_Walking_4
       rect:
         serializedVersion: 2
-        x: 3
-        y: 3
-        width: 5
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 123
+        y: 0
+        width: 15
+        height: 32
+      alignment: 9
+      pivot: {x: 0.53333336, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db3440ee822305e50800000000000000
-      internalID: 6795986989075415997
+      spriteID: cc7e47d466bb92e40800000000000000
+      internalID: 5632238857064081356
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dinheiro_spritesheet_jumpboy_5
+      name: jumpBoy_Walking_5
       rect:
         serializedVersion: 2
-        x: 21
-        y: 4
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 147
+        y: 0
+        width: 24
+        height: 32
+      alignment: 9
+      pivot: {x: 0.45833334, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a46b5d2807eea7be0800000000000000
-      internalID: -1478607360638994870
+      spriteID: a072d90ecdd6b2c90800000000000000
+      internalID: -7193535184365607158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jumpBoy_Walking_6
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 0
+        width: 33
+        height: 32
+      alignment: 9
+      pivot: {x: 0.42424244, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71521e360e0559330800000000000000
+      internalID: 3716965992142808343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jumpBoy_Walking_7
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 0
+        width: 24
+        height: 32
+      alignment: 9
+      pivot: {x: 0.45833334, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3944fa1f567f99d00800000000000000
+      internalID: 980086411148346515
       vertices: []
       indices: 
       edges: []
@@ -273,7 +297,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 0259ee07e884cb54a96dc45ee0271c72
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 

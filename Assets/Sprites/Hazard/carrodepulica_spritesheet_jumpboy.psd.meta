@@ -1,7 +1,19 @@
 fileFormatVersion: 2
-guid: a1ccc178f3925e041b3826a6f59fbd48
+guid: a137675f79bcfda4194393a40d006cc0
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 4264326170007924248
+    second: carrodepulica_spritesheet_jumpboy_0
+  - first:
+      213: 1149660654459076252
+    second: carrodepulica_spritesheet_jumpboy_1
+  - first:
+      213: 8707477885072705807
+    second: carrodepulica_spritesheet_jumpboy_2
+  - first:
+      213: -7461658519497552242
+    second: carrodepulica_spritesheet_jumpboy_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -41,11 +53,11 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.49, y: 0.19}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 10
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -125,7 +137,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: carrodepulica_spritesheet_jumpboy_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 31
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81e69b9ee0eed2b30800000000000000
+      internalID: 4264326170007924248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: carrodepulica_spritesheet_jumpboy_1
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 0
+        width: 31
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9eb649264a64ff00800000000000000
+      internalID: 1149660654459076252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: carrodepulica_spritesheet_jumpboy_2
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 0
+        width: 31
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f090455900d27d870800000000000000
+      internalID: 8707477885072705807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: carrodepulica_spritesheet_jumpboy_3
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 0
+        width: 31
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8ec41e2c1dd27890800000000000000
+      internalID: -7461658519497552242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

@@ -27,7 +27,7 @@ public class CameraControl : MonoBehaviour
 			
 			//rotaciona a camera
 			//talvez seja trocado por uma rotação base inicial que não muda
-			transform.LookAt(target);//rotaciona a camera na direção do player
+			//transform.LookAt(target);//rotaciona a camera na direção do player
 		}
 		else
 		{
