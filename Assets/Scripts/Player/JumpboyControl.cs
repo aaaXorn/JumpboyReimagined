@@ -61,36 +61,62 @@ public class JumpboyControl : MonoBehaviour
 	void FixedUpdate()
 	{
 		#region inputs
+		#if !UNITY_EDITOR
 		if(Input.touchCount > 0)//se o jogador está tocando na tela
         {
 			Touch touch = Input.GetTouch(0);//pega o input de toque
 
-			//pulo
-			if(touch.position.y <= half_sHeight)//|| !_3D
-            {
-				jump_holding = true;
-				sliding = false;
-            }
 			//slide
-			else
+			if(touch.position.y >= half_sHeight || _3D)
             {
 				jump_holding = false;
 				sliding = true;
             }
+			//pulo
+			else
+            {
+				jump_holding = true;
+				sliding = false;
+            }
         }
         else
         {
-//se fora do editor da Unity (na hora de buildar)
-#if !UNITY_EDITOR
 			jump_holding = false;
 			sliding = false;
-#endif
 		}
+		#endif
+		
+		#if UNITY_EDITOR
+		if(Input.GetMouseButton(0))//se o jogador está tocando na tela
+        {
+			Vector3 mousePos = Input.mousePosition;//pega a posição do mouse
+
+			//slide
+			if(mousePos.y >= half_sHeight || _3D)
+            {
+				jump_holding = false;
+				sliding = true;
+            }
+			//pulo
+			else
+            {
+				jump_holding = true;
+				sliding = false;
+            }
+        }
+        else
+        {
+			jump_holding = false;
+			sliding = false;
+		}
+		#endif
+		
 		#endregion
 
 		//movimento do policial
 		transf_police.position = new Vector3(transform.position.x + rel_pos_police, transf_police.position.y, transf_police.position.z);
 		
+		#region damage
 		//se tomou dano
 		if(hurt)
 		{
@@ -100,12 +126,16 @@ public class JumpboyControl : MonoBehaviour
 				{
 					//deixa o jogador parado, talvez mude
 					rigid.velocity = new Vector3(0, 0, 0);
+					
+					anim.SetTrigger("hurt");
 				}
 				else if(hurt_time >= max_hurt_time)
 				{
 					//volta ao normal
 					hurt = false;
 					rigid.velocity = BaseVelocity;
+					
+					anim.SetTrigger("hurt");
 				}
 				
 				//socorro matematica
@@ -122,16 +152,29 @@ public class JumpboyControl : MonoBehaviour
 			}
 			else//morre
 			{
-				//animação, timer etc
+				//animação
+				if(hurt_time <= 0)
+				{
+					anim.SetTrigger("morreu");
+					
+					//deixa o jogador parado
+					rigid.velocity = new Vector3(0, 0, 0);
+				}
+				else if(hurt_time >= max_hurt_time)
+				{
+					//recarrega a scene atual
+					SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+				}
 				
-				//recarrega a scene atual
-				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
+				hurt_time += Time.deltaTime;
+				
 				//cancela o resto do update
 				return;
 			}
 		}
-
+		#endregion
+		
+		#region hold jump
 		//pulo carregado
 		if (jumping && jump_holding)
 		{
@@ -150,16 +193,18 @@ public class JumpboyControl : MonoBehaviour
 			}
 		}
 		else jumping = false;
+		#endregion
 
 		//checa se o jogador está no chão com raycast
 		landed = Physics.Raycast(transform.position + (Vector3.up * 0.1f), -Vector3.up, land_ray_height);
 		Debug.DrawRay(transform.position, -Vector3.up * land_ray_height, Color.red);
-
+		
+		#region slide and jump
 		//se o jogador está no chão
 		if(landed)
 		{
 			//slide
-			if(sliding)
+			if(_3D && sliding)
 			{
 				//tira a hurtbox da cabeça
 				if(head_col.enabled) head_col.enabled = false;
@@ -185,6 +230,7 @@ public class JumpboyControl : MonoBehaviour
 				}
 			}
 		}
+		#endregion
 		
 		//determina a animação de pulo/andar
 		anim.SetFloat("vel_Y", rigid.velocity.y);
