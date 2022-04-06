@@ -5,17 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class JumpboyControl : MonoBehaviour
 {
+	[SerializeField] bool _3D;//se o jogo está em 2D ou 3D
+	float half_sHeight;//metade da altura da tela
+
 	[Header("Velocity and Misc")]
 	Rigidbody rigid;
 	Animator anim;
-	[SerializeField] Rigidbody rigid_police;//rigidbody do policial que segue o player
 	[SerializeField] Transform transf_police, transf_target;//transform do alvo
+	[SerializeField] float rel_pos_police;//posição relativa X do policial em relação ao player
 	//velocidade exponencial pra baixo quando toma hit
 	[SerializeField] float init_vel, end_vel, vel_hurt_time_mod;//vel_change;
 	
 	bool landed = true;//se o jogador está no chão
 	
-	int lives = 2;//vidas do jogador
+	[SerializeField] int lives = 2;//vidas do jogador
 	public bool hurt;//enquanto o jogador toma um hit
 	[SerializeField] float hurt_time, max_hurt_time;//tempo atual e máximo na animação de dano
 	
@@ -25,7 +28,7 @@ public class JumpboyControl : MonoBehaviour
 	bool grounded;//se o player está no chão
 	
 	#region jump
-	bool jump_holding;//se o player está carregando um pulo
+	bool jump_holding, jumping;//se o player está carregando um pulo/pulando
 	[SerializeField] float jump_charge, max_jump_charge;//carga do pulo atual e máxima
 	
 	[SerializeField] float jump_base_force, jump_charge_force;//força base e por carregar do pulo
@@ -41,33 +44,52 @@ public class JumpboyControl : MonoBehaviour
     //inicializa variáveis
     void Start()
     {
+		//pega a largura da tela
+		half_sHeight = Screen.height / 2;
+
         rigid = GetComponent<Rigidbody>();
 		
 		//movimento horizontal
 		rigid.velocity = BaseVelocity;
-		rigid_police.velocity = BaseVelocity;
-		
+		//setta a posição relativa do policial
+		rel_pos_police = transf_police.position.x - transform.position.x;
+
 		anim = GetComponent<Animator>();
     }
 	
 	//física do jogo
 	void FixedUpdate()
 	{
-		//carregando o pulo
-		//fora do if(landed) pra servir como buffer
-		if(jump_holding)
-		{
-			//se o timer passar do máximo
-			if(jump_charge >= max_jump_charge)
-			{
-				jump_charge = max_jump_charge;
-			}
+		#region inputs
+		if(Input.touchCount > 0)//se o jogador está tocando na tela
+        {
+			Touch touch = Input.GetTouch(0);//pega o input de toque
+
+			//pulo
+			if(touch.position.y <= half_sHeight)//|| !_3D
+            {
+				jump_holding = true;
+				sliding = false;
+            }
+			//slide
 			else
-			{
-				//timer
-				jump_charge += Time.deltaTime;
-			}
+            {
+				jump_holding = false;
+				sliding = true;
+            }
+        }
+        else
+        {
+//se fora do editor da Unity (na hora de buildar)
+#if !UNITY_EDITOR
+			jump_holding = false;
+			sliding = false;
+#endif
 		}
+		#endregion
+
+		//movimento do policial
+		transf_police.position = new Vector3(transform.position.x + rel_pos_police, transf_police.position.y, transf_police.position.z);
 		
 		//se tomou dano
 		if(hurt)
@@ -78,14 +100,12 @@ public class JumpboyControl : MonoBehaviour
 				{
 					//deixa o jogador parado, talvez mude
 					rigid.velocity = new Vector3(0, 0, 0);
-					rigid_police.velocity = new Vector3(0, 0, 0);
 				}
 				else if(hurt_time >= max_hurt_time)
 				{
 					//volta ao normal
 					hurt = false;
 					rigid.velocity = BaseVelocity;
-					rigid_police.velocity = BaseVelocity;
 				}
 				
 				//socorro matematica
@@ -93,12 +113,11 @@ public class JumpboyControl : MonoBehaviour
 				//muda a posição do alvo da camera
 				transf_target.Translate(Vector3.right * change);
 				//muda a posição do policial
-				transf_police.Translate(Vector3.right * change);
-				
+				rel_pos_police += change;
+
 				hurt_time += Time.deltaTime;
 				
 				//cancela o resto do update
-				//player ainda pode dar buffer de um high jump
 				return;
 			}
 			else//morre
@@ -107,14 +126,35 @@ public class JumpboyControl : MonoBehaviour
 				
 				//recarrega a scene atual
 				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+				//cancela o resto do update
+				return;
 			}
 		}
-		
+
+		//pulo carregado
+		if (jumping && jump_holding)
+		{
+			//se o timer passar do máximo
+			if (jump_charge >= max_jump_charge)
+			{
+				jumping = false;
+			}
+			else
+			{
+				//timer
+				jump_charge += Time.deltaTime;
+
+				//força do pulo
+				rigid.AddForce(new Vector3(0, jump_base_force * Time.deltaTime, 0), ForceMode.Impulse);
+			}
+		}
+		else jumping = false;
+
 		//checa se o jogador está no chão com raycast
 		landed = Physics.Raycast(transform.position + (Vector3.up * 0.1f), -Vector3.up, land_ray_height);
 		Debug.DrawRay(transform.position, -Vector3.up * land_ray_height, Color.red);
-		print(landed);
-		
+
 		//se o jogador está no chão
 		if(landed)
 		{
@@ -134,13 +174,12 @@ public class JumpboyControl : MonoBehaviour
 				if(!head_col.enabled) head_col.enabled = true;
 				
 				//pulo
-				if(jump_charge > 0 && !jump_holding)
+				if(jump_holding && !jumping)
 				{
 					//força do pulo
-					float forceY = jump_base_force +
-								  (jump_charge_force * jump_charge / max_jump_charge);
-					rigid.AddForce(new Vector3(0, forceY, 0), ForceMode.Impulse);
-					
+					rigid.AddForce(new Vector3(0, jump_base_force, 0), ForceMode.Impulse);
+
+					jumping = true;
 					//reseta o charge do pulo
 					jump_charge = 0;
 				}
@@ -181,16 +220,19 @@ public class JumpboyControl : MonoBehaviour
 	void OnTriggerEnter(Collider other)
 	{
 		//se for um obstaculo
-		if(other.gameObject.CompareTag("Hazard"))
+		if(!hurt && other.gameObject.CompareTag("Hazard"))
 		{
-			//desativa o obstaculo
-			other.transform.position += new Vector3(0, 0, 5);
-			
-			//deixa a cor do obstaculo transparente
-			//indica que o obstaculo foi desativado
-			Color color = other.GetComponent<SpriteRenderer>().color;
-			color.a = 0.5f;
-			other.GetComponent<SpriteRenderer>().color = color;
+			if (!_3D)
+			{
+				//desativa o obstaculo
+				other.transform.position += new Vector3(0, 0, 10);
+
+				//deixa a cor do obstaculo transparente
+				//indica que o obstaculo foi desativado
+				Color color = other.GetComponent<SpriteRenderer>().color;
+				color.a = 0.5f;
+				other.GetComponent<SpriteRenderer>().color = color;
+			}
 			
 			lives--;
 			hurt_time = 0;

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
+	[SerializeField] bool _3D;//se o jogo está em 2D ou 3D
+
 	[SerializeField] Transform target;//quem a camera segue
 	[SerializeField] Vector3 offset;//diferência entre o vetor da camera e do player
 	
 	[SerializeField] float smoothSpd;//usado na velocidade da camera
-	
-	[SerializeField] bool _3D;//se o jogo está em 2D ou 3D
 	
 	//movimento da camera
     void LateUpdate()//roda depois do update
