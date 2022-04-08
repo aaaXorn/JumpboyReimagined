@@ -13,7 +13,7 @@ public class JumpboyControl : MonoBehaviour
 	Animator anim;
 	[SerializeField] Transform transf_police, transf_target;//transform do alvo
 	[SerializeField] float rel_pos_police;//posição relativa X do policial em relação ao player
-	//velocidade exponencial pra baixo quando toma hit
+	//velocidade exponencial decrescente quando toma hit
 	[SerializeField] float init_vel, end_vel, vel_hurt_time_mod;//vel_change;
 	
 	bool landed = true;//se o jogador está no chão
@@ -67,7 +67,7 @@ public class JumpboyControl : MonoBehaviour
 			Touch touch = Input.GetTouch(0);//pega o input de toque
 
 			//slide
-			if(touch.position.y >= half_sHeight || _3D)
+			if(touch.position.y >= half_sHeight && _3D)
             {
 				jump_holding = false;
 				sliding = true;
@@ -92,7 +92,7 @@ public class JumpboyControl : MonoBehaviour
 			Vector3 mousePos = Input.mousePosition;//pega a posição do mouse
 
 			//slide
-			if(mousePos.y >= half_sHeight || _3D)
+			if(mousePos.y >= half_sHeight && _3D)
             {
 				jump_holding = false;
 				sliding = true;
