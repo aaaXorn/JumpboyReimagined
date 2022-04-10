@@ -6904,11 +6904,9 @@ MonoBehaviour:
   _3D: 0
   transf_police: {fileID: 2079494032}
   transf_target: {fileID: 101061964}
-  rel_pos_police: 0
   init_vel: 0.12
   end_vel: 0
   vel_hurt_time_mod: 0.5
-  lives: 2
   hurt: 0
   hurt_time: 0
   max_hurt_time: 1.5
@@ -6919,6 +6917,9 @@ MonoBehaviour:
   jump_base_force: 6
   jump_charge_force: 1
   head_col: {fileID: 2001538267}
+  minSwipeLength: 0
+  touchStart: {x: 0, y: 0}
+  lane: 0
 --- !u!54 &2001538266
 Rigidbody:
   m_ObjectHideFlags: 0

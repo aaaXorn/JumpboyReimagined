@@ -11,14 +11,15 @@ public class JumpboyControl : MonoBehaviour
 	[Header("Velocity and Misc")]
 	Rigidbody rigid;
 	Animator anim;
-	[SerializeField] Transform transf_police, transf_target;//transform do alvo
-	[SerializeField] float rel_pos_police;//posição relativa X do policial em relação ao player
+	[SerializeField] Transform transf_police;
+	[SerializeField] Transform transf_target;//transform do alvo
+	float rel_pos_police;//posição relativa X do policial em relação ao player
 	//velocidade exponencial decrescente quando toma hit
 	[SerializeField] float init_vel, end_vel, vel_hurt_time_mod;//vel_change;
 	
 	bool landed = true;//se o jogador está no chão
 	
-	[SerializeField] int lives = 2;//vidas do jogador
+	int lives = 2;//vidas do jogador
 	public bool hurt;//enquanto o jogador toma um hit
 	[SerializeField] float hurt_time, max_hurt_time;//tempo atual e máximo na animação de dano
 	
@@ -41,6 +42,16 @@ public class JumpboyControl : MonoBehaviour
 	Collider head_col;//collider da cabeça, desabilitado durante o slide
 	#endregion
 	
+	#region swipe
+	[Header("Swipe")]
+	[SerializeField] float minSwipeLength;//mínimo pra contar como swipe
+	[SerializeField] Vector2 touchStart;//começo do swipe
+	
+	[SerializeField] int lane;//qual o player vai se mover para
+	bool side_movement;//se o jogador está se movendo na lateral
+	//timers do movimento
+	#endregion
+	
     //inicializa variáveis
     void Start()
     {
@@ -57,8 +68,8 @@ public class JumpboyControl : MonoBehaviour
 		anim = GetComponent<Animator>();
     }
 	
-	//física do jogo
-	void FixedUpdate()
+	//pega os inputs
+	void Update()
 	{
 		#region inputs
 		#if !UNITY_EDITOR
@@ -67,10 +78,45 @@ public class JumpboyControl : MonoBehaviour
 			Touch touch = Input.GetTouch(0);//pega o input de toque
 
 			//slide
-			if(touch.position.y >= half_sHeight && _3D)
+			if(touch.position.y <= half_sHeight && _3D)
             {
 				jump_holding = false;
 				sliding = true;
+				
+				#region swipe
+				if(!side_movement)//se o jogador não está já se movendo
+				{
+					if(touch.phase == TouchPhase.Began)
+					{
+						//posição inicial do swipe
+						touchStart = touch.position;
+					}
+					else if(touch.phase == TouchPhase.Ended)
+					{
+						//posição final do swipe
+						Vector2 touchEnd = touch.position;
+						//vetor do swipe
+						Vector3 swipe = new Vector3(touchEnd.x - touchStart.x, touchEnd.y - touchStart.y);
+						
+						//se o tamanho do swipe não é pequeno demais
+						if(swipe.magnitude >= minSwipeLength)
+						{
+							//pra esquerda
+							if(swipe.x < 0)
+							{
+								if(lane > -1) lane--;
+							}
+							//pra direita
+							else if(swipe.x > 0)
+							{
+								if(lane < 1) lane++;
+							}
+							
+							side_movement = true;
+						}
+					}
+				}
+				#endregion
             }
 			//pulo
 			else
@@ -90,12 +136,22 @@ public class JumpboyControl : MonoBehaviour
 		if(Input.GetMouseButton(0))//se o jogador está tocando na tela
         {
 			Vector3 mousePos = Input.mousePosition;//pega a posição do mouse
-
 			//slide
-			if(mousePos.y >= half_sHeight && _3D)
+			if(mousePos.y <= half_sHeight && _3D)
             {
 				jump_holding = false;
 				sliding = true;
+				
+				#region swipe
+				if(!side_movement)//se o jogador não está já se movendo
+				{
+					if(Input.GetMouseButtonDown(0))
+					{
+						//posição inicial do swipe
+						touchStart = Input.mousePosition;
+					}
+				}
+				#endregion
             }
 			//pulo
 			else
@@ -109,10 +165,40 @@ public class JumpboyControl : MonoBehaviour
 			jump_holding = false;
 			sliding = false;
 		}
+		
+		if(_3D && Input.GetMouseButtonUp(0))
+		{
+			//posição final do swipe
+			Vector2 touchEnd = Input.mousePosition;
+			//vetor do swipe
+			Vector3 swipe = new Vector3(touchEnd.x - touchStart.x, touchEnd.y - touchStart.y);
+			
+			//se o tamanho do swipe não é pequeno demais
+			if(swipe.magnitude >= minSwipeLength)
+			{
+				//pra esquerda
+				if(swipe.x < 0)
+				{
+					if(lane > -1) lane--;
+				}
+				//pra direita
+				else if(swipe.x > 0)
+				{
+					if(lane < 1) lane++;
+				}
+				
+				side_movement = true;
+			}
+		}
+		
 		#endif
 		
 		#endregion
-
+	}
+	
+	//física do jogo
+	void FixedUpdate()
+	{
 		//movimento do policial
 		transf_police.position = new Vector3(transform.position.x + rel_pos_police, transf_police.position.y, transf_police.position.z);
 		
@@ -198,6 +284,7 @@ public class JumpboyControl : MonoBehaviour
 		//checa se o jogador está no chão com raycast
 		landed = Physics.Raycast(transform.position + (Vector3.up * 0.1f), -Vector3.up, land_ray_height);
 		Debug.DrawRay(transform.position, -Vector3.up * land_ray_height, Color.red);
+		print(landed);
 		
 		#region slide and jump
 		//se o jogador está no chão
@@ -232,36 +319,15 @@ public class JumpboyControl : MonoBehaviour
 		}
 		#endregion
 		
+		//movimento pros lados
+		if(_3D && side_movement && !hurt)
+		{
+			
+		}
+		
 		//determina a animação de pulo/andar
 		anim.SetFloat("vel_Y", rigid.velocity.y);
 	}
-	
-	#region buttons
-	//botão de pulo apertado
-	public void JumpButtonPress()
-	{
-		jump_holding = true;
-	}
-	//botão de pulo soltado
-	public void JumpButtonRelease()
-	{
-		//sobrepõe o slide
-		sliding = false;
-		
-		jump_holding = false;
-	}
-	
-	//botão de slide apertado
-	public void SlideButtonPress()
-	{
-		sliding = true;
-	}
-	//botão de slide soltado
-	public void SlideButtonRelease()
-	{
-		sliding = false;
-	}
-	#endregion
 	
 	void OnTriggerEnter(Collider other)
 	{
@@ -278,6 +344,10 @@ public class JumpboyControl : MonoBehaviour
 				Color color = other.GetComponent<SpriteRenderer>().color;
 				color.a = 0.5f;
 				other.GetComponent<SpriteRenderer>().color = color;
+			}
+			else
+			{
+				
 			}
 			
 			lives--;
