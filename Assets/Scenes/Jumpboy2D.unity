@@ -6920,6 +6920,14 @@ MonoBehaviour:
   minSwipeLength: 0
   touchStart: {x: 0, y: 0}
   lane: 0
+  previous_lane: 0
+  lane_pos:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  side_timer: 0
+  max_side_timer: 1
+  side_spd: 0.12
 --- !u!54 &2001538266
 Rigidbody:
   m_ObjectHideFlags: 0

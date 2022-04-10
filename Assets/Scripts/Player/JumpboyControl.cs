@@ -47,9 +47,12 @@ public class JumpboyControl : MonoBehaviour
 	[SerializeField] float minSwipeLength;//mínimo pra contar como swipe
 	[SerializeField] Vector2 touchStart;//começo do swipe
 	
-	[SerializeField] int lane;//qual o player vai se mover para
+	[SerializeField] int lane, previous_lane;//qual o player vai se mover para e anterior
+	[SerializeField] float[] lane_pos;//posições da lane
+	
 	bool side_movement;//se o jogador está se movendo na lateral
 	//timers do movimento
+	[SerializeField] float side_timer, max_side_timer;
 	#endregion
 	
     //inicializa variáveis
@@ -166,7 +169,7 @@ public class JumpboyControl : MonoBehaviour
 			sliding = false;
 		}
 		
-		if(_3D && Input.GetMouseButtonUp(0))
+		if(_3D && Input.mousePosition.y <= half_sHeight && Input.GetMouseButtonUp(0))
 		{
 			//posição final do swipe
 			Vector2 touchEnd = Input.mousePosition;
@@ -320,9 +323,21 @@ public class JumpboyControl : MonoBehaviour
 		#endregion
 		
 		//movimento pros lados
-		if(_3D && side_movement && !hurt)
+		if(_3D && side_movement)
 		{
+			//move o jogador pro lado Z
+			float currentPos = Mathf.Lerp(lane_pos[previous_lane+1], lane_pos[lane+1], side_timer / max_side_timer);
+				
+			transform.position = new Vector3(transform.position.x, transform.position.y, currentPos);
 			
+			//timer pra determinar quando o movimento acaba
+			if(side_timer >= max_side_timer)
+			{
+				side_timer = 0;
+				previous_lane = lane;
+				side_movement = false;
+			}
+			else side_timer += Time.deltaTime;
 		}
 		
 		//determina a animação de pulo/andar
