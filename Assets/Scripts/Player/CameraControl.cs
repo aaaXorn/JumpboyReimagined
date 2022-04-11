@@ -10,7 +10,9 @@ public class CameraControl : MonoBehaviour
 	[SerializeField] Vector3 offset;//diferência entre o vetor da camera e do player
 	
 	[SerializeField] float smoothSpd;//usado na velocidade da camera
-	
+
+	[SerializeField] Transform transf_manager;//chão e managers de hazard
+
 	//movimento da camera
     void LateUpdate()//roda depois do update
     {
@@ -37,5 +39,6 @@ public class CameraControl : MonoBehaviour
 		
 		//muda a posição da camera
 		transform.position = new Vector3(smoothedPos.x, offset.y, offset.z);
+		transf_manager.position = new Vector3(transform.position.x, transf_manager.position.y, transf_manager.position.z);
     }
 }

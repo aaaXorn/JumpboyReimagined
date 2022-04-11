@@ -25,7 +25,7 @@ public class JumpboyControl : MonoBehaviour
 	
 	[Header("Movement Actions")]
 	[SerializeField] Vector3 BaseVelocity;//velocidade do jumpboy correndo
-	[SerializeField] float land_ray_height = 0.2f;//raycast do pulo
+	[SerializeField] float land_ray_height = 0.2f, land_init_height = 0.1f;//raycast do pulo
 	bool grounded;//se o player está no chão
 	
 	#region jump
@@ -87,7 +87,7 @@ public class JumpboyControl : MonoBehaviour
 				sliding = true;
 				
 				#region swipe
-				if(!side_movement)//se o jogador não está já se movendo
+				if(!side_movement && lane == previous_lane)//se o jogador não está já se movendo
 				{
 					if(touch.phase == TouchPhase.Began)
 					{
@@ -105,12 +105,12 @@ public class JumpboyControl : MonoBehaviour
 						if(swipe.magnitude >= minSwipeLength)
 						{
 							//pra esquerda
-							if(swipe.x < 0)
+							if(swipe.x > 0)
 							{
 								if(lane > -1) lane--;
 							}
 							//pra direita
-							else if(swipe.x > 0)
+							else if(swipe.x < 0)
 							{
 								if(lane < 1) lane++;
 							}
@@ -146,7 +146,7 @@ public class JumpboyControl : MonoBehaviour
 				sliding = true;
 				
 				#region swipe
-				if(!side_movement)//se o jogador não está já se movendo
+				if(!side_movement && lane == previous_lane)//se o jogador não está já se movendo
 				{
 					if(Input.GetMouseButtonDown(0))
 					{
@@ -169,7 +169,7 @@ public class JumpboyControl : MonoBehaviour
 			sliding = false;
 		}
 		
-		if(_3D && Input.mousePosition.y <= half_sHeight && Input.GetMouseButtonUp(0))
+		if(_3D && lane == previous_lane && Input.mousePosition.y <= half_sHeight && Input.GetMouseButtonUp(0))
 		{
 			//posição final do swipe
 			Vector2 touchEnd = Input.mousePosition;
@@ -180,12 +180,12 @@ public class JumpboyControl : MonoBehaviour
 			if(swipe.magnitude >= minSwipeLength)
 			{
 				//pra esquerda
-				if(swipe.x < 0)
+				if(swipe.x > 0)
 				{
 					if(lane > -1) lane--;
 				}
 				//pra direita
-				else if(swipe.x > 0)
+				else if(swipe.x < 0)
 				{
 					if(lane < 1) lane++;
 				}
@@ -285,8 +285,8 @@ public class JumpboyControl : MonoBehaviour
 		#endregion
 
 		//checa se o jogador está no chão com raycast
-		landed = Physics.Raycast(transform.position + (Vector3.up * 0.1f), -Vector3.up, land_ray_height);
-		Debug.DrawRay(transform.position, -Vector3.up * land_ray_height, Color.red);
+		landed = Physics.Raycast(transform.position + (Vector3.up * land_init_height), -Vector3.up, land_ray_height);
+		Debug.DrawRay(transform.position + (Vector3.up * land_init_height), -Vector3.up * land_ray_height, Color.red);
 		print(landed);
 		
 		#region slide and jump
@@ -320,10 +320,11 @@ public class JumpboyControl : MonoBehaviour
 				}
 			}
 		}
-		#endregion
-		
-		//movimento pros lados
-		if(_3D && side_movement)
+        #endregion
+
+        #region sideways movement
+        //movimento pros lados
+        if (_3D && side_movement)
 		{
 			//move o jogador pro lado Z
 			float currentPos = Mathf.Lerp(lane_pos[previous_lane+1], lane_pos[lane+1], side_timer / max_side_timer);
@@ -339,7 +340,8 @@ public class JumpboyControl : MonoBehaviour
 			}
 			else side_timer += Time.deltaTime;
 		}
-		
+		#endregion
+
 		//determina a animação de pulo/andar
 		anim.SetFloat("vel_Y", rigid.velocity.y);
 	}
