@@ -22,7 +22,8 @@ public class HazardManager : MonoBehaviour
 	//tempo de spawn atual e maximo pro BG
 	[SerializeField] float BG_spawn_time, total_BG_spawn_time;
 
-	[SerializeField] GameObject[] bg_obj;//array de background
+	//[SerializeField] GameObject[] bg_obj;//array de background
+	[SerializeField] int bg_obj;//numero de backgrounds
 	[SerializeField] string[] bg_tag;//array de tags de background
 
 	[Header("Obstaculos")]//obstaculos spawnados
@@ -31,7 +32,8 @@ public class HazardManager : MonoBehaviour
 	//modifier do spawn_time que varia com o tempo
 	[SerializeField] float spawn_time_mod, spawn_time_add;//add é o valor somado, mod é o atual
 
-	[SerializeField] GameObject[] hazards;//array de hazards
+	//[SerializeField] GameObject[] hazards;//array de hazards
+	[SerializeField] int hazards;//numero de hazards
 	[SerializeField] string[] hz_tag;//array de tags de hazard
 	[SerializeField] Transform SpawnPos, BG_SpawnPos;//posição que os obstaculos spawnam
 	
@@ -101,7 +103,7 @@ public class HazardManager : MonoBehaviour
 			if(spawn_time <= 0)
 			{
 				//aleatoriza o próximo obstaculo
-				int no = Random.Range(0, hazards.Length);
+				int no = Random.Range(0, hazards);
 				string tag = hz_tag[no];
 
 				//cria um novo obstaculo
@@ -120,7 +122,7 @@ public class HazardManager : MonoBehaviour
 			if(BG_spawn_time <= 0)
 			{
 				//aleatoriza um obj de background
-				int no = Random.Range(0, bg_obj.Length);
+				int no = Random.Range(0, bg_obj);
 				string tag = bg_tag[no];
 
 				//cria o obj de background
@@ -140,15 +142,48 @@ public class HazardManager : MonoBehaviour
         {
 			if (!_3D)
 			{
-				//ativa o obstaculo
-				other.transform.position += new Vector3(0, 0, -10);
+				if (other.gameObject.CompareTag("Hazard"))
+				{
+					//cor do sprite
+					Color color = other.GetComponent<SpriteRenderer>().color;
 
-				//tira a transparência do objeto
-				//indica que o obstaculo foi ativado
-				Color color = other.GetComponent<SpriteRenderer>().color;
-				color.a = 1f;
-				other.GetComponent<SpriteRenderer>().color = color;
+					//se estiver transparente
+					if (color.a < 1f)
+					{
+						//ativa o obstaculo
+						other.transform.position += new Vector3(0, 0, -10);
+
+						//indica que o obstaculo foi ativado
+						//tira a transparência do objeto
+						color.a = 1f;
+						other.GetComponent<SpriteRenderer>().color = color;
+					}
+				}
+
+				other.gameObject.SetActive(false);
 			}
+			else
+            {
+				if (other.gameObject.CompareTag("Hazard"))
+				{
+					//cor do material
+					Color color = other.transform.GetChild(0).GetComponent<Renderer>().material.color;
+
+					//se estiver transparente
+					if (color.a < 1f)
+					{
+						//ativa o obstaculo
+						other.transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+
+						//indica que o obstaculo foi ativado
+						//tira a transparência do objeto
+						color.a = 1f;
+						other.transform.GetChild(0).GetComponent<Renderer>().material.color = color;
+					}
+				}
+
+				other.gameObject.SetActive(false);
+            }
 
 			//Destroy(other.gameObject);
 		}

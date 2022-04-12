@@ -39,6 +39,6 @@ public class CameraControl : MonoBehaviour
 		
 		//muda a posição da camera
 		transform.position = new Vector3(smoothedPos.x, offset.y, offset.z);
-		transf_manager.position = new Vector3(transform.position.x, transf_manager.position.y, transf_manager.position.z);
+		transf_manager.position = new Vector3(target.position.x, transf_manager.position.y, transf_manager.position.z);
     }
 }
