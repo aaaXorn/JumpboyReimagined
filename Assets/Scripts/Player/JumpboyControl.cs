@@ -33,6 +33,7 @@ public class JumpboyControl : MonoBehaviour
 	[SerializeField] float jump_charge, max_jump_charge;//carga do pulo atual e máxima
 	
 	[SerializeField] float jump_base_force, jump_charge_force;//força base e por carregar do pulo
+	[SerializeField] float grav_mod = 1f;//modificador de gravidade
 	#endregion
 	
 	#region slide
@@ -45,9 +46,9 @@ public class JumpboyControl : MonoBehaviour
 	#region swipe
 	[Header("Swipe")]
 	[SerializeField] float minSwipeLength;//mínimo pra contar como swipe
-	[SerializeField] Vector2 touchStart;//começo do swipe
+	Vector2 touchStart;//começo do swipe
 	
-	[SerializeField] int lane, previous_lane;//qual o player vai se mover para e anterior
+	int lane, previous_lane;//qual o player vai se mover para e anterior
 	[SerializeField] float[] lane_pos;//posições da lane
 	
 	bool side_movement;//se o jogador está se movendo na lateral
@@ -202,6 +203,9 @@ public class JumpboyControl : MonoBehaviour
 	//física do jogo
 	void FixedUpdate()
 	{
+		//aplica gravidade
+		rigid.AddForce(Physics.gravity * grav_mod, ForceMode.Acceleration);
+		
 		//movimento do policial
 		transf_police.position = new Vector3(transform.position.x + rel_pos_police, transf_police.position.y, transf_police.position.z);
 		

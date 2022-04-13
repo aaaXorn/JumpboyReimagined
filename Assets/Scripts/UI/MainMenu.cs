@@ -14,4 +14,8 @@ public class MainMenu : MonoBehaviour
 	{
 		SceneManager.LoadScene("Jumpboy3D");
 	}
+	
+	//volume slider(float volume)
+	//AudioMixer.SetFloat("Volume", Mathf.Log10(volume * 20);
+	//save_script.mainvolume = volume;
 }
