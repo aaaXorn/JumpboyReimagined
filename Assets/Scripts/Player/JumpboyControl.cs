@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class JumpboyControl : MonoBehaviour
@@ -56,6 +57,11 @@ public class JumpboyControl : MonoBehaviour
 	[SerializeField] float side_timer, max_side_timer;
 	#endregion
 	
+	#region score
+	[SerializeField] Text scr_txt, h_scr_txt;//texto do score e high score
+	[SerializeField] int high_score;//texto do high score
+	#endregion
+	
     //inicializa variáveis
     void Start()
     {
@@ -68,8 +74,22 @@ public class JumpboyControl : MonoBehaviour
 		rigid.velocity = BaseVelocity;
 		//setta a posição relativa do policial
 		rel_pos_police = transf_police.position.x - transform.position.x;
-
+		
 		anim = GetComponent<Animator>();
+		
+		//pega o high score
+		if(!_3D)
+		{
+			if(PlayerPrefs.HasKey("hScore"))
+				high_score = PlayerPrefs.GetInt("hScore");
+		}
+		else
+		{
+			if(PlayerPrefs.HasKey("3d_hScore"))
+				high_score = PlayerPrefs.GetInt("3d_hScore");
+		}
+		
+		h_scr_txt.text = "HIGH SCORE " + high_score;
     }
 	
 	//pega os inputs
@@ -255,6 +275,17 @@ public class JumpboyControl : MonoBehaviour
 				}
 				else if(hurt_time >= max_hurt_time)
 				{
+					//define o high score
+					int score = (int)Mathf.Round(transform.position.x);
+					
+					if(score > high_score)
+					{
+						if(!_3D) PlayerPrefs.SetInt("hScore", score);
+						else PlayerPrefs.SetInt("3d_hScore", score);
+						
+						PlayerPrefs.Save();
+					}
+					
 					//recarrega a scene atual
 					SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 				}
@@ -345,7 +376,10 @@ public class JumpboyControl : MonoBehaviour
 			else side_timer += Time.deltaTime;
 		}
 		#endregion
-
+		
+		//score atual
+		scr_txt.text = "SCORE " + Mathf.Round(transform.position.x);
+		
 		//determina a animação de pulo/andar
 		anim.SetFloat("vel_Y", rigid.velocity.y);
 	}
