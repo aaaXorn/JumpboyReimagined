@@ -174,7 +174,10 @@ public class HazardManager : MonoBehaviour
 					{
 						//ativa o obstaculo
 						other.transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
-
+						
+						//tira opção de transparência
+						ToOpaqueMode(other.transform.GetChild(0).GetComponent<Renderer>().material);
+						
 						//indica que o obstaculo foi ativado
 						//tira a transparência do objeto
 						color.a = 1f;
@@ -188,4 +191,17 @@ public class HazardManager : MonoBehaviour
 			//Destroy(other.gameObject);
 		}
 	}
+	
+	//transforma o material em um material opaco
+	static void ToOpaqueMode(Material material)
+    {
+        material.SetOverrideTag("RenderType", "");
+        material.SetInt("_SrcBlend", (int) UnityEngine.Rendering.BlendMode.One);
+        material.SetInt("_DstBlend", (int) UnityEngine.Rendering.BlendMode.Zero);
+        material.SetInt("_ZWrite", 1);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.DisableKeyword("_ALPHABLEND_ON");
+        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = -1;
+    }
 }
