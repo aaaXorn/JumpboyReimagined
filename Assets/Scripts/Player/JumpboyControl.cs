@@ -405,14 +405,19 @@ public class JumpboyControl : MonoBehaviour
 				//desativa o obstaculo
 				other.enabled = false;
 				
-				//adiciona opção de transparência
-				ToFadeMode(other.GetComponent<Renderer>().material);
-				
 				//deixa a cor do obstaculo transparente
+				
 				//indica que o obstaculo foi desativado
 				Color color = other.GetComponent<Renderer>().material.color;
-				color.a = 0.5f;
-				other.GetComponent<Renderer>().material.color = color;
+				
+				if(color != null)//pra não dar bugs
+				{
+					//adiciona opção de transparência
+					ToFadeMode(other.GetComponent<Renderer>().material);
+					
+					color.a = 0.5f;
+					other.GetComponent<Renderer>().material.color = color;
+				}
 			}
 			
 			lives--;
