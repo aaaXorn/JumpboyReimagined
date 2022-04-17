@@ -168,7 +168,7 @@ public class HazardManager : MonoBehaviour
 				{
 					//cor do material
 					Color color = other.transform.GetChild(0).GetComponent<Renderer>().material.color;
-
+					
 					//se estiver transparente
 					if (color.a < 1f)
 					{
@@ -181,7 +181,7 @@ public class HazardManager : MonoBehaviour
 						other.transform.GetChild(0).GetComponent<Renderer>().material.color = color;
 					}
 				}
-
+				
 				other.gameObject.SetActive(false);
             }
 
