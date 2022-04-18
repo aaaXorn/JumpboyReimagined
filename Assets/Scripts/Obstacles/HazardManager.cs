@@ -36,7 +36,8 @@ public class HazardManager : MonoBehaviour
 	[SerializeField] int hazards;//numero de hazards
 	[SerializeField] string[] hz_tag;//array de tags de hazard
 	[SerializeField] Transform SpawnPos, BG_SpawnPos;//posição que os obstaculos spawnam
-	
+	int bg_loop;//numero de vezes que a rua spawnou
+
 	[SerializeField] JumpboyControl JC;//script do jumpboy
 	
     void Start()
@@ -45,8 +46,8 @@ public class HazardManager : MonoBehaviour
 		poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
 		//cria os objetos das pools
-		foreach(Pool pool in pools)
-        {
+		foreach (Pool pool in pools)
+		{
 			Queue<GameObject> objectPool = new Queue<GameObject>();
 
 			for (int i = 0; i < pool.size; i++)
@@ -55,15 +56,26 @@ public class HazardManager : MonoBehaviour
 				obj.SetActive(false);
 				objectPool.Enqueue(obj);
 			}
-			
-			poolDictionary.Add(pool.tag, objectPool);
-        }
 
-		//tempo até o primeiro obstaculo aparecer
-        spawn_time = total_spawn_time/2;
+			poolDictionary.Add(pool.tag, objectPool);
+		}
+
+		bg_obj = bg_tag.Length;
+		hazards = hz_tag.Length;
 		
-		//faz a função SpawnTimers() rodar a cada 0.5 sec
-		InvokeRepeating("SpawnTimers", 0, 0.5f);
+		if (_3D)
+		{
+			//cria as ruas e obstaculos
+			InvokeRepeating("Streets", 0, 0.1f);
+		}
+		else
+		{
+			//tempo até o primeiro obstaculo aparecer
+			spawn_time = total_spawn_time / 2;
+
+			//faz a função SpawnTimers() rodar a cada 0.5 sec
+			InvokeRepeating("SpawnTimers", 0, 0.5f);
+		}
     }
 
 	#region obj pool
@@ -91,14 +103,13 @@ public class HazardManager : MonoBehaviour
 	//SpawnFromPool(string tag, transform.position, Quaternion.identity);
 	#endregion
 
-	//InvokeRepeating
-	void SpawnTimers()//Update()
+	//timer hazards
+	void SpawnTimers()
     {
 		if(!JC.hurt)
 		{
 			//timers
 			spawn_time -= 0.5f;//Time.deltaTime;
-			BG_spawn_time -= 0.5f;//Time.deltaTime;
 			
 			if(spawn_time <= 0)
 			{
@@ -119,7 +130,9 @@ public class HazardManager : MonoBehaviour
 				spawn_time_mod += (spawn_time_mod < total_spawn_time / 2) ? spawn_time_add : 0;
 			}
 
-			if(BG_spawn_time <= 0)
+			BG_spawn_time -= 0.5f;//Time.deltaTime;
+
+			if (BG_spawn_time <= 0)
 			{
 				//aleatoriza um obj de background
 				int no = Random.Range(0, bg_obj);
@@ -135,6 +148,58 @@ public class HazardManager : MonoBehaviour
 		}
     }
 	
+	//pos ruas
+	void Streets()
+    {
+		if(JC.transform.position.x > 15 * bg_loop)
+        {
+			//define a posição
+			float diff = JC.transform.position.x - (15 * bg_loop);
+			print(diff);
+			Vector3 pos_bg = new Vector3(JC.transform.position.x + 60 + diff, BG_SpawnPos.position.y, BG_SpawnPos.position.z);
+			Vector3 pos_hz = new Vector3(pos_bg.x + 7.5f, pos_bg.y, pos_bg.z);
+
+			//aleatoriza um obj de background
+			int no = Random.Range(0, bg_obj);
+			string tag = bg_tag[no];
+			//cria o obj de background
+			SpawnFromPool(tag, pos_bg, transform.rotation).SetActive(true);
+
+			bg_loop++;
+
+			if (bg_loop < 20)
+			{
+				if (bg_loop % 3 == 0)
+				{
+					//aleatoriza o próximo obstaculo
+					no = Random.Range(0, hazards);
+					tag = hz_tag[no];
+					//cria um novo obstaculo
+					SpawnFromPool(tag, pos_hz, transform.rotation).SetActive(true);
+				}
+			}
+			else if (bg_loop < 40)
+			{
+				if (bg_loop % 2 == 0)
+				{
+					//aleatoriza o próximo obstaculo
+					no = Random.Range(0, hazards);
+					tag = hz_tag[no];
+					//cria um novo obstaculo
+					SpawnFromPool(tag, pos_hz, transform.rotation).SetActive(true);
+				}
+			}
+			else
+            {
+				//aleatoriza o próximo obstaculo
+				no = Random.Range(0, hazards);
+				tag = hz_tag[no];
+				//cria um novo obstaculo
+				SpawnFromPool(tag, pos_hz, transform.rotation).SetActive(true);
+			}
+        }
+    }
+
 	void OnTriggerEnter(Collider other)
 	{
 		//destroi o obstaculo/objeto do BG quando ele passa de um ponto fora da tela
@@ -166,22 +231,27 @@ public class HazardManager : MonoBehaviour
             {
 				if (other.gameObject.CompareTag("Hazard"))
 				{
-					//cor do material
-					Color color = other.transform.GetChild(0).GetComponent<Renderer>().material.color;
-					
-					//se estiver transparente
-					if (color.a < 1f)
+					Renderer render = other.transform.GetChild(0).GetComponent<Renderer>();
+
+					if (render != null)
 					{
-						//ativa o obstaculo
-						other.transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
-						
-						//tira opção de transparência
-						ToOpaqueMode(other.transform.GetChild(0).GetComponent<Renderer>().material);
-						
-						//indica que o obstaculo foi ativado
-						//tira a transparência do objeto
-						color.a = 1f;
-						other.transform.GetChild(0).GetComponent<Renderer>().material.color = color;
+						//cor do material
+						Color color = render.material.color;
+
+						//se estiver transparente
+						if (color.a < 1f)
+						{
+							//ativa o obstaculo
+							other.transform.GetChild(0).GetComponent<BoxCollider>().enabled = true;
+
+							//tira opção de transparência
+							ToOpaqueMode(render.material);
+
+							//indica que o obstaculo foi ativado
+							//tira a transparência do objeto
+							color.a = 1f;
+							render.material.color = color;
+						}
 					}
 				}
 				

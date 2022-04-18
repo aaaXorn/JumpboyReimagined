@@ -6,7 +6,7 @@ public class Reenable : MonoBehaviour
 {
 	Collider col;
 	
-	void Start()
+	void Awake()
 	{
 		col = GetComponent<BoxCollider>();
 	}
