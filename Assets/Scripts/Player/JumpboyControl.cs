@@ -11,9 +11,8 @@ public class JumpboyControl : MonoBehaviour
 
 	[Header("Velocity and Misc")]
 	Rigidbody rigid;
-	Animator anim;
-	[SerializeField] Transform transf_police;
-	[SerializeField] Transform transf_target;//transform do alvo
+	[SerializeField] Animator anim;
+	[SerializeField] Transform transf_police, transf_target;//transform do policial e do alvo
 	float rel_pos_police;//posição relativa X do policial em relação ao player
 	//velocidade exponencial decrescente quando toma hit
 	[SerializeField] float init_vel, end_vel, vel_hurt_time_mod;//vel_change;
@@ -74,8 +73,6 @@ public class JumpboyControl : MonoBehaviour
 		rigid.velocity = BaseVelocity;
 		//setta a posição relativa do policial
 		rel_pos_police = transf_police.position.x - transform.position.x;
-		
-		anim = GetComponent<Animator>();
 		
 		//pega o high score
 		if(!_3D)
@@ -356,7 +353,7 @@ public class JumpboyControl : MonoBehaviour
 			}
 		}
         #endregion
-
+anim.SetBool("slide", sliding);
         #region sideways movement
         //movimento pros lados
         if (_3D && side_movement)

@@ -6852,6 +6852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _3D: 0
+  anim: {fileID: 2001538269}
   transf_police: {fileID: 2079494032}
   transf_target: {fileID: 101061964}
   init_vel: 0.12

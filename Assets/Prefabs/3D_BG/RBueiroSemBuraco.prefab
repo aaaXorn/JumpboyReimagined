@@ -1,62 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &613408330957151769
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 613408330957151766}
-  - component: {fileID: 613408330957151764}
-  - component: {fileID: 613408330957151767}
-  m_Layer: 0
-  m_Name: Buraco
-  m_TagString: Hazard
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &613408330957151766
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613408330957151769}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.7499995}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1189698600212208340}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &613408330957151764
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613408330957151769}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.2642431, y: 0.31534988, z: 1}
-  m_Center: {x: -0.0040190755, y: 0.0017269262, z: 5.0608736e-16}
---- !u!114 &613408330957151767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613408330957151769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cf297adee6fda94386004aaeead7c0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5162967321745975625
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,7 +29,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 7.71, y: 6.347699, z: 0.14999993}
   m_Children:
-  - {fileID: 613408330957151766}
   - {fileID: 5757538998902678394}
   m_Father: {fileID: 8793121189142555229}
   m_RootOrder: 0
@@ -151,7 +93,7 @@ GameObject:
   - component: {fileID: 8793121189142555229}
   - component: {fileID: 5643588469531022139}
   m_Layer: 6
-  m_Name: RBueiro
+  m_Name: RBueiroSemBuraco
   m_TagString: Background
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -211,11 +153,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8932193570174267357}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.222, y: 0.392, z: 2.08}
-  m_LocalScale: {x: 12.970169, y: 15.753739, z: 41.86378}
+  m_LocalPosition: {x: -0.004, y: 0, z: 1.84}
+  m_LocalScale: {x: 13.229572, y: 16.068813, z: 42.701057}
   m_Children: []
   m_Father: {fileID: 1189698600212208340}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7518435681469710956
 MeshFilter:

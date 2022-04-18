@@ -156,7 +156,7 @@ public class HazardManager : MonoBehaviour
 			//define a posição
 			float diff = JC.transform.position.x - (15 * bg_loop);
 			print(diff);
-			Vector3 pos_bg = new Vector3(JC.transform.position.x + 60 + diff, BG_SpawnPos.position.y, BG_SpawnPos.position.z);
+			Vector3 pos_bg = new Vector3(JC.transform.position.x + 75 - diff, BG_SpawnPos.position.y, BG_SpawnPos.position.z);
 			Vector3 pos_hz = new Vector3(pos_bg.x + 7.5f, pos_bg.y, pos_bg.z);
 
 			//aleatoriza um obj de background
