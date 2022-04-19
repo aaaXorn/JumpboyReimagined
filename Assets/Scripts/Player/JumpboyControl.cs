@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class JumpboyControl : MonoBehaviour
 {
+	public bool paused;//se o jogo está pausado
+	[SerializeField] Pause scr_P;//script de pause
+
 	[SerializeField] bool _3D;//se o jogo está em 2D ou 3D
-	float half_sHeight;//metade da altura da tela
+	float frct_sWidth, half_sHeight;//metade da altura da tela
 
 	[Header("Velocity and Misc")]
 	Rigidbody rigid;
@@ -19,7 +21,7 @@ public class JumpboyControl : MonoBehaviour
 	
 	bool landed = true;//se o jogador está no chão
 	
-	int lives = 2;//vidas do jogador
+	public int lives = 2;//vidas do jogador
 	public bool hurt;//enquanto o jogador toma um hit
 	[SerializeField] float hurt_time, max_hurt_time;//tempo atual e máximo na animação de dano
 	
@@ -38,7 +40,9 @@ public class JumpboyControl : MonoBehaviour
 	
 	#region slide
 	bool sliding;//se o jogador está dando um slide
-	
+	float slide_timer;//timer do slider
+	[SerializeField] float max_slide;//tempo máximo do slide
+
 	[SerializeField]
 	Collider head_col;//collider da cabeça, desabilitado durante o slide
 	#endregion
@@ -64,8 +68,10 @@ public class JumpboyControl : MonoBehaviour
     //inicializa variáveis
     void Start()
     {
-		//pega a largura da tela
+		//pega a altura da tela
 		half_sHeight = Screen.height / 2;
+		//pega a largura da tela
+		frct_sWidth = Screen.width / 7;
 
         rigid = GetComponent<Rigidbody>();
 		
@@ -88,106 +94,100 @@ public class JumpboyControl : MonoBehaviour
 		
 		h_scr_txt.text = "HIGH SCORE " + high_score;
     }
-	
-	//pega os inputs
-	void Update()
-	{
-		#region inputs
-		#if !UNITY_EDITOR
-		if(Input.touchCount > 0)//se o jogador está tocando na tela
-        {
-			Touch touch = Input.GetTouch(0);//pega o input de toque
 
-			//slide
-			if(touch.position.y <= half_sHeight && _3D)
-            {
-				jump_holding = false;
-				sliding = true;
-				
-				#region swipe
-				if(!side_movement && lane == previous_lane)//se o jogador não está já se movendo
+    //pega os inputs
+    void Update()
+    {
+		if (!paused)
+		{
+			#region inputs
+#if !UNITY_EDITOR
+			if (Input.touchCount > 0)//se o jogador está tocando na tela
+			{
+				Touch touch = Input.GetTouch(0);//pega o input de toque
+
+				//slide
+				if _3D)
 				{
-					if(touch.phase == TouchPhase.Began)
+					#region swipe
+					if (touch.phase == TouchPhase.Began)
 					{
 						//posição inicial do swipe
 						touchStart = touch.position;
 					}
-					else if(touch.phase == TouchPhase.Ended)
+					else if (touch.phase == TouchPhase.Ended)
 					{
 						//posição final do swipe
 						Vector2 touchEnd = touch.position;
 						//vetor do swipe
 						Vector3 swipe = new Vector3(touchEnd.x - touchStart.x, touchEnd.y - touchStart.y);
-						
+
 						//se o tamanho do swipe não é pequeno demais
-						if(swipe.magnitude >= minSwipeLength)
+						if (!side_movement && lane == previous_lane && Mathf.Abs(swipe.x) >= minSwipeLength)
 						{
 							//pra esquerda
-							if(swipe.x > 0)
+							if (swipe.x > 0)
 							{
-								if(lane > -1) lane--;
+								if (lane > -1) lane--;
 							}
 							//pra direita
-							else if(swipe.x < 0)
+							else if (swipe.x < 0)
 							{
-								if(lane < 1) lane++;
+								if (lane < 1) lane++;
 							}
-							
+
 							side_movement = true;
 						}
+						else if (!sliding && swipe.y <= -minSwipeLength)
+						{
+							sliding = true;
+
+							slide_timer = 0;
+						}
 					}
+					#endregion
 				}
-				#endregion
-            }
-			//pulo
+				//pulo
+				if (!sliding && (!_3D || (touch.position.y >= half_sHeight && touch.position.x >= frct_sWidth)))
+				{
+					jump_holding = true;
+					sliding = false;
+				}
+			}
 			else
-            {
-				jump_holding = true;
-				sliding = false;
-            }
-        }
-        else
-        {
-			jump_holding = false;
-			sliding = false;
-		}
-		#endif
-		
-		#if UNITY_EDITOR
+			{
+				jump_holding = false;
+			}
+#endif
+
+#if UNITY_EDITOR
 		if(Input.GetMouseButton(0))//se o jogador está tocando na tela
         {
 			Vector3 mousePos = Input.mousePosition;//pega a posição do mouse
 			//slide
-			if(mousePos.y <= half_sHeight && _3D)
+			if(_3D)
             {
-				jump_holding = false;
-				sliding = true;
-				
-				#region swipe
-				if(!side_movement && lane == previous_lane)//se o jogador não está já se movendo
+			#region swipe
+				if(Input.GetMouseButtonDown(0))
 				{
-					if(Input.GetMouseButtonDown(0))
-					{
-						//posição inicial do swipe
-						touchStart = Input.mousePosition;
-					}
+					//posição inicial do swipe
+					touchStart = Input.mousePosition;
 				}
-				#endregion
+			#endregion
             }
+
 			//pulo
-			else
+			if(!sliding && (!_3D || (Input.mousePosition.y >= half_sHeight && Input.mousePosition.x >= frct_sWidth)))
             {
 				jump_holding = true;
-				sliding = false;
             }
         }
         else
         {
 			jump_holding = false;
-			sliding = false;
 		}
 		
-		if(_3D && lane == previous_lane && Input.mousePosition.y <= half_sHeight && Input.GetMouseButtonUp(0))
+		if(_3D && Input.GetMouseButtonUp(0))
 		{
 			//posição final do swipe
 			Vector2 touchEnd = Input.mousePosition;
@@ -195,7 +195,7 @@ public class JumpboyControl : MonoBehaviour
 			Vector3 swipe = new Vector3(touchEnd.x - touchStart.x, touchEnd.y - touchStart.y);
 			
 			//se o tamanho do swipe não é pequeno demais
-			if(swipe.magnitude >= minSwipeLength)
+			if(!side_movement && lane == previous_lane && Mathf.Abs(swipe.x) >= minSwipeLength)
 			{
 				//pra esquerda
 				if(swipe.x > 0)
@@ -210,15 +210,22 @@ public class JumpboyControl : MonoBehaviour
 				
 				side_movement = true;
 			}
+			else if(!sliding && swipe.y <= -minSwipeLength)
+			{
+				sliding = true;
+
+				slide_timer = 0;
+			}
 		}
 		
-		#endif
-		
-		#endregion
+#endif
+
+			#endregion
+		}
 	}
-	
-	//física do jogo
-	void FixedUpdate()
+
+    //física do jogo
+    void FixedUpdate()
 	{
 		//aplica gravidade
 		rigid.AddForce(Physics.gravity * grav_mod, ForceMode.Acceleration);
@@ -279,12 +286,10 @@ public class JumpboyControl : MonoBehaviour
 					{
 						if(!_3D) PlayerPrefs.SetInt("hScore", score);
 						else PlayerPrefs.SetInt("3d_hScore", score);
-						
-						PlayerPrefs.Save();
 					}
-					
-					//recarrega a scene atual
-					SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+					//abre o menu de pause
+					scr_P.PauseMenu();
 				}
 				
 				hurt_time += Time.deltaTime;
@@ -333,6 +338,12 @@ public class JumpboyControl : MonoBehaviour
 
 				//reseta o timer do pulo
 				jump_charge = 0;
+
+				slide_timer += Time.deltaTime;
+				if(slide_timer >= max_slide)
+                {
+					sliding = false;
+                }
 			}
 			//idle e pulo
 			else
@@ -353,7 +364,7 @@ public class JumpboyControl : MonoBehaviour
 			}
 		}
         #endregion
-anim.SetBool("slide", sliding);
+		anim.SetBool("slide", sliding);
         #region sideways movement
         //movimento pros lados
         if (_3D && side_movement)
