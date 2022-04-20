@@ -23,9 +23,11 @@ public class HazardManager : MonoBehaviour
 	[SerializeField] float BG_spawn_time, total_BG_spawn_time;
 
 	//[SerializeField] GameObject[] bg_obj;//array de background
-	[SerializeField] int bg_obj;//numero de backgrounds
+	int bg_obj;//numero de backgrounds (ou ruas no 3D)
 	[SerializeField] string[] bg_tag;//array de tags de background
-
+	int predio_obj;//numero de predios
+	[SerializeField] string[] predio_tag;//array de tags de predio
+	
 	[Header("Obstaculos")]//obstaculos spawnados
 	//tempo de spawn atual e maximo
 	[SerializeField] float spawn_time, total_spawn_time;
@@ -33,7 +35,7 @@ public class HazardManager : MonoBehaviour
 	[SerializeField] float spawn_time_mod, spawn_time_add;//add é o valor somado, mod é o atual
 
 	//[SerializeField] GameObject[] hazards;//array de hazards
-	[SerializeField] int hazards;//numero de hazards
+	int hazards;//numero de hazards
 	[SerializeField] string[] hz_tag;//array de tags de hazard
 	[SerializeField] Transform SpawnPos, BG_SpawnPos;//posição que os obstaculos spawnam
 	int bg_loop;//numero de vezes que a rua spawnou
@@ -65,6 +67,8 @@ public class HazardManager : MonoBehaviour
 		
 		if (_3D)
 		{
+			predio_obj = predio_tag.Length;
+			
 			//cria as ruas e obstaculos
 			InvokeRepeating("Streets", 0, 0.1f);
 		}
@@ -155,16 +159,29 @@ public class HazardManager : MonoBehaviour
         {
 			//define a posição
 			float diff = JC.transform.position.x - (15 * bg_loop);
-			print(diff);
-			Vector3 pos_bg = new Vector3(JC.transform.position.x + 75 - diff, BG_SpawnPos.position.y, BG_SpawnPos.position.z);
+			
+			Vector3 pos_bg = new Vector3(JC.transform.position.x + 120 - diff, BG_SpawnPos.position.y, BG_SpawnPos.position.z);
 			Vector3 pos_hz = new Vector3(pos_bg.x + 7.5f, pos_bg.y, pos_bg.z);
 
-			//aleatoriza um obj de background
+			//aleatoriza um obj de rua
 			int no = Random.Range(0, bg_obj);
 			string tag = bg_tag[no];
-			//cria o obj de background
+			//cria o obj de rua
 			SpawnFromPool(tag, pos_bg, transform.rotation).SetActive(true);
-
+			
+			//aleatoriza o predio
+			no = Random.Range(0, predio_obj);
+			tag = predio_tag[no];
+			//cria o obj de predio
+			SpawnFromPool(tag, pos_bg, transform.rotation).SetActive(true);
+			//aleatoriza o outro predio
+			no = Random.Range(0, predio_obj);
+			tag = predio_tag[no];
+			//rotação do predio 2, pra ele ficar do outro lado
+			Quaternion predio2_rot = new Quaternion(transform.rotation.x, 180, transform.rotation.z, transform.rotation.w);
+			//cria o outro obj de predio
+			SpawnFromPool(tag, pos_bg, predio2_rot).SetActive(true);
+			
 			bg_loop++;
 
 			if (bg_loop < 20)
