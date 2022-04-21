@@ -27,6 +27,8 @@ public class HazardManager : MonoBehaviour
 	[SerializeField] string[] bg_tag;//array de tags de background
 	int predio_obj;//numero de predios
 	[SerializeField] string[] predio_tag;//array de tags de predio
+	[SerializeField] int lanes_onStart;//quantas lanes de rua/prédio tem quando o jogo inicia
+	Quaternion predio2_rot;
 	
 	[Header("Obstaculos")]//obstaculos spawnados
 	//tempo de spawn atual e maximo
@@ -42,8 +44,10 @@ public class HazardManager : MonoBehaviour
 
 	[SerializeField] JumpboyControl JC;//script do jumpboy
 	
-    void Start()
+    void Awake()
     {
+		QualitySettings.vSyncCount = 0;
+		
 		//cria o dicionario da pool
 		poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
@@ -65,10 +69,42 @@ public class HazardManager : MonoBehaviour
 		bg_obj = bg_tag.Length;
 		hazards = hz_tag.Length;
 		
-		if (_3D)
+		//spawna as ruas/prédios iniciais
+		if(_3D)
 		{
 			predio_obj = predio_tag.Length;
 			
+			//rotação do predio 2, pra ele ficar do outro lado
+			predio2_rot = new Quaternion(transform.rotation.x, 180, transform.rotation.z, transform.rotation.w);
+			
+			for(int i = 0; i < lanes_onStart; i++)
+			{
+				Vector3 posit = new Vector3(15 * (i-1), -0.58f, 0);
+				
+				//ruas
+				SpawnFromPool(bg_tag[0], posit, transform.rotation).SetActive(true);
+				
+				//predio 1
+				//aleatoriza o predio
+				int no = Random.Range(0, predio_obj);
+				string tag = predio_tag[no];
+				//cria o obj de predio
+				SpawnFromPool(tag, posit, transform.rotation).SetActive(true);
+				
+				//predio 2
+				//aleatoriza o outro predio
+				no = Random.Range(0, predio_obj);
+				tag = predio_tag[no];
+				//cria o outro obj de predio
+				SpawnFromPool(tag, posit, predio2_rot).SetActive(true);
+			}
+		}
+    }
+	
+	void Start()
+	{
+		if (_3D)
+		{
 			//cria as ruas e obstaculos
 			InvokeRepeating("Streets", 0, 0.1f);
 		}
@@ -80,9 +116,11 @@ public class HazardManager : MonoBehaviour
 			//faz a função SpawnTimers() rodar a cada 0.5 sec
 			InvokeRepeating("SpawnTimers", 0, 0.5f);
 		}
-    }
+	}
 
 	#region obj pool
+	//instantiate:
+	//SpawnFromPool(string tag, transform.position, Quaternion.identity);
 	//spawna um objeto
 	public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
     {
@@ -103,8 +141,6 @@ public class HazardManager : MonoBehaviour
 
 		return objectToSpawn;
     }
-	//instantiate:
-	//SpawnFromPool(string tag, transform.position, Quaternion.identity);
 	#endregion
 
 	//timer hazards
@@ -160,7 +196,7 @@ public class HazardManager : MonoBehaviour
 			//define a posição
 			float diff = JC.transform.position.x - (15 * bg_loop);
 			
-			Vector3 pos_bg = new Vector3(JC.transform.position.x + 120 - diff, BG_SpawnPos.position.y, BG_SpawnPos.position.z);
+			Vector3 pos_bg = new Vector3(JC.transform.position.x + 135 - diff, BG_SpawnPos.position.y, BG_SpawnPos.position.z);
 			Vector3 pos_hz = new Vector3(pos_bg.x + 7.5f, pos_bg.y, pos_bg.z);
 
 			//aleatoriza um obj de rua
@@ -177,8 +213,6 @@ public class HazardManager : MonoBehaviour
 			//aleatoriza o outro predio
 			no = Random.Range(0, predio_obj);
 			tag = predio_tag[no];
-			//rotação do predio 2, pra ele ficar do outro lado
-			Quaternion predio2_rot = new Quaternion(transform.rotation.x, 180, transform.rotation.z, transform.rotation.w);
 			//cria o outro obj de predio
 			SpawnFromPool(tag, pos_bg, predio2_rot).SetActive(true);
 			

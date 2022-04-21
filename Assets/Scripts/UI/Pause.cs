@@ -33,6 +33,14 @@ public class Pause : MonoBehaviour
         }
     }
 
+	public void Restart()
+	{
+		Time.timeScale = unpaused_time;
+
+        PlayerPrefs.Save();
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
+
     public void MainMenu()
     {
         Time.timeScale = unpaused_time;

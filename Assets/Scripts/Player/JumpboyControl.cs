@@ -68,6 +68,11 @@ public class JumpboyControl : MonoBehaviour
     //inicializa variáveis
     void Start()
     {
+		//pra minha placa de vídeo parar de fazer um barulho desalmado que ta me deixando maluco
+		#if UNITY_EDITOR
+		Application.targetFrameRate = 60;
+		#endif
+		
 		//pega a altura da tela
 		half_sHeight = Screen.height / 2;
 		//pega a largura da tela
@@ -231,7 +236,7 @@ public class JumpboyControl : MonoBehaviour
 		rigid.AddForce(Physics.gravity * grav_mod, ForceMode.Acceleration);
 		
 		//movimento do policial
-		transf_police.position = new Vector3(transform.position.x + rel_pos_police, transf_police.position.y, transf_police.position.z);
+		transf_police.position = new Vector3(transform.position.x + rel_pos_police, transf_police.position.y, transform.position.z);
 		
 		#region damage
 		//se tomou dano
