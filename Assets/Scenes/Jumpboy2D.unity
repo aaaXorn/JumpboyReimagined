@@ -6391,16 +6391,16 @@ MonoBehaviour:
     size: 2
   BG_spawn_time: 0
   total_BG_spawn_time: 2
-  bg_obj: 3
   bg_tag:
   - Banco
   - Arvore1
   - Arvore2
+  predio_tag: []
+  lanes_onStart: 0
   spawn_time: 0
   total_spawn_time: 6
   spawn_time_mod: 0
   spawn_time_add: 0.5
-  hazards: 2
   hz_tag:
   - Carro
   - Cone
@@ -7031,6 +7031,7 @@ MonoBehaviour:
   hurt_time: 0
   max_hurt_time: 1.5
   BaseVelocity: {x: 8, y: 0, z: 0}
+  DifficultyVelocity: {x: 1.5, y: 0, z: 0}
   land_ray_height: 0.2
   land_init_height: 0.1
   jump_charge: 0

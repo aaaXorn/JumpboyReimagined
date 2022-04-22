@@ -27,6 +27,7 @@ public class JumpboyControl : MonoBehaviour
 	
 	[Header("Movement Actions")]
 	[SerializeField] Vector3 BaseVelocity;//velocidade do jumpboy correndo
+	[SerializeField] Vector3 DifficultyVelocity;//velocidade do jumpboy que pode ser aumentada pela dificuldade
 	[SerializeField] float land_ray_height = 0.2f, land_init_height = 0.1f;//raycast do pulo
 	bool grounded;//se o player está no chão
 	
@@ -81,6 +82,7 @@ public class JumpboyControl : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
 		
 		//movimento horizontal
+		BaseVelocity += DifficultyVelocity * StaticVars.GameDifficulty;
 		rigid.velocity = BaseVelocity;
 		//setta a posição relativa do policial
 		rel_pos_police = transf_police.position.x - transform.position.x;
@@ -383,6 +385,13 @@ public class JumpboyControl : MonoBehaviour
 				side_timer = 0;
 				previous_lane = lane;
 				side_movement = false;
+			}
+			else if(side_timer == 0)
+			{
+				side_timer += Time.deltaTime;
+				
+				if(lane > previous_lane) anim.SetTrigger("move_R");
+				else anim.SetTrigger("move_L");
 			}
 			else side_timer += Time.deltaTime;
 		}
