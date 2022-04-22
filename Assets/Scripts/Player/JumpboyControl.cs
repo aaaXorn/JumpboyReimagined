@@ -88,13 +88,11 @@ public class JumpboyControl : MonoBehaviour
 		//pega o high score
 		if(!_3D)
 		{
-			if(PlayerPrefs.HasKey("hScore"))
-				high_score = PlayerPrefs.GetInt("hScore");
+			high_score = StaticVars.HighScore;
 		}
 		else
 		{
-			if(PlayerPrefs.HasKey("3d_hScore"))
-				high_score = PlayerPrefs.GetInt("3d_hScore");
+			high_score = StaticVars.HighScore3D;
 		}
 		
 		h_scr_txt.text = "HIGH SCORE " + high_score;
@@ -289,8 +287,8 @@ public class JumpboyControl : MonoBehaviour
 					
 					if(score > high_score)
 					{
-						if(!_3D) PlayerPrefs.SetInt("hScore", score);
-						else PlayerPrefs.SetInt("3d_hScore", score);
+						if(!_3D) StaticVars.HighScore = score;
+						else StaticVars.HighScore3D = score;
 					}
 
 					//abre o menu de pause

@@ -36,24 +36,26 @@ public class Pause : MonoBehaviour
 	public void Restart()
 	{
 		Time.timeScale = unpaused_time;
-
-        PlayerPrefs.Save();
+		
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
     public void MainMenu()
     {
         Time.timeScale = unpaused_time;
-
-        PlayerPrefs.Save();
+		
         SceneManager.LoadScene("LoadMenu");
     }
 
     public void Exit()
     {
-        Time.timeScale = unpaused_time;
-
-        PlayerPrefs.Save();
-        Application.Quit();
+        //salva as info do player prefs
+		PlayerPrefs.SetFloat("MainAudio", StaticVars.MainVolume);
+		PlayerPrefs.SetInt("Difficulty", StaticVars.GameDifficulty);
+		PlayerPrefs.SetInt("hScore", StaticVars.HighScore);
+		PlayerPrefs.SetInt("3d_hScore", StaticVars.HighScore3D);
+		
+		PlayerPrefs.Save();
+		Application.Quit();
     }
 }

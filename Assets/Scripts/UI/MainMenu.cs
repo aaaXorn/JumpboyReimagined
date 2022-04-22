@@ -8,9 +8,28 @@ public class MainMenu : MonoBehaviour
 {
 	[SerializeField] AudioMixer audio_main;//mixer de volume
 	
+	//inicializa as variáveis do StaticVars
+	void Awake()
+	{
+		//if impede as variáveis de resetarem quando o jogador volta pro menu
+		if(!StaticVars.Initialized)
+		{
+			if(PlayerPrefs.HasKey("hScore"))
+				StaticVars.HighScore = PlayerPrefs.GetInt("hScore");
+			if(PlayerPrefs.HasKey("3d_hScore"))
+				StaticVars.HighScore3D = PlayerPrefs.GetInt("3d_hScore");
+			if(PlayerPrefs.HasKey("MainAudio"))
+				StaticVars.MainVolume = PlayerPrefs.GetFloat("MainAudio");
+			if(PlayerPrefs.HasKey("Difficulty"))
+				StaticVars.GameDifficulty = PlayerPrefs.GetInt("Difficulty");
+			
+			StaticVars.Initialized = true;
+		}
+	}
+	
 	void Start()
 	{
-		float am_volume = PlayerPrefs.GetFloat("MainAudio");
+		float am_volume = StaticVars.MainVolume;
 		
 		//define o audio
 		audio_main.SetFloat("Master", Mathf.Log10(am_volume) * 20);
@@ -19,17 +38,21 @@ public class MainMenu : MonoBehaviour
 	//muda a cena pro modo de jogo escolhido
     public void To2D()
 	{
-		PlayerPrefs.Save();
 		SceneManager.LoadScene("Load2D");
 	}
 	public void To3D()
 	{
-		PlayerPrefs.Save();
 		SceneManager.LoadScene("Load3D");
 	}
 	
 	public void Exit()
 	{
+		//salva as info do player prefs
+		PlayerPrefs.SetFloat("MainAudio", StaticVars.MainVolume);
+		PlayerPrefs.SetInt("Difficulty", StaticVars.GameDifficulty);
+		PlayerPrefs.SetInt("hScore", StaticVars.HighScore);
+		PlayerPrefs.SetInt("3d_hScore", StaticVars.HighScore3D);
+		
 		PlayerPrefs.Save();
 		Application.Quit();
 	}
@@ -39,6 +62,6 @@ public class MainMenu : MonoBehaviour
 		//define o audio
 		audio_main.SetFloat("Master", Mathf.Log10(volume) * 20);
 		
-		PlayerPrefs.SetFloat("MainAudio", volume);
+		StaticVars.MainVolume = volume;
 	}
 }
