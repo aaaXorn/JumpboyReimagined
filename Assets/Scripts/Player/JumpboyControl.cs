@@ -390,8 +390,11 @@ public class JumpboyControl : MonoBehaviour
 			{
 				side_timer += Time.deltaTime;
 				
-				if(lane > previous_lane) anim.SetTrigger("move_R");
-				else anim.SetTrigger("move_L");
+				if(landed && !sliding)
+				{
+					if(lane > previous_lane) anim.SetTrigger("move_R");
+					else anim.SetTrigger("move_L");
+				}
 			}
 			else side_timer += Time.deltaTime;
 		}

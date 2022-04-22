@@ -978,7 +978,7 @@ MonoBehaviour:
   - 0
   - 3.5
   side_timer: 0
-  max_side_timer: 0.75
+  max_side_timer: 0.5
   scr_txt: {fileID: 809227117}
   h_scr_txt: {fileID: 1981718333}
   high_score: 0
