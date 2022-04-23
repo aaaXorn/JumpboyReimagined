@@ -54,6 +54,7 @@ public class Pause : MonoBehaviour
 		PlayerPrefs.SetInt("Difficulty", StaticVars.GameDifficulty);
 		PlayerPrefs.SetInt("hScore", StaticVars.HighScore);
 		PlayerPrefs.SetInt("3d_hScore", StaticVars.HighScore3D);
+		PlayerPrefs.SetInt("ConcaveCamera", (StaticVars.ConcaveCam == true ? 1 : 0));
 		
 		PlayerPrefs.Save();
 		Application.Quit();

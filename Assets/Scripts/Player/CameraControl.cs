@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 
 public class CameraControl : MonoBehaviour
 {
@@ -9,16 +11,33 @@ public class CameraControl : MonoBehaviour
 	[SerializeField] Transform target;//quem a camera segue
 	[SerializeField] Vector3 offset;//diferência entre o vetor da camera e do player
 	
-	[SerializeField] float smoothSpd;//usado na velocidade da camera
+	//[SerializeField] float smoothSpd;//usado na velocidade da camera
 
 	[SerializeField] Transform transf_manager;//chão e managers de hazard
-
+	
+	[SerializeField] float lensD_intensity;//intensidade da distorção de lente
+	
+	void Awake()
+	{
+		if(_3D)
+		{
+			//pega o post process volume
+			PostProcessVolume vol = GetComponent<PostProcessVolume>();
+			//variável de referência da distorção de lente
+			LensDistortion lensD;
+			
+			vol.profile.TryGetSettings(out lensD);
+			lensD.intensity.value = (StaticVars.ConcaveCam ? lensD_intensity : 0);
+		}
+	}
+	
 	//movimento da camera
     void LateUpdate()//roda depois do update
     {
 		//posição desejada
 		Vector3 desiredPos = target.position + offset;
-		Vector3 smoothedPos;
+		//tirei o smoothing que tava meio travado, aqui o código antigo se precisar pra algo
+		/*Vector3 smoothedPos;
 		
 		if(_3D)
 		{
@@ -40,5 +59,10 @@ public class CameraControl : MonoBehaviour
 		//muda a posição da camera
 		transform.position = new Vector3(smoothedPos.x, offset.y, offset.z);
 		transf_manager.position = new Vector3(target.position.x, transf_manager.position.y, transf_manager.position.z);
-    }
+		*/
+		
+		//muda a posição da camera
+		transform.position = new Vector3(desiredPos.x, offset.y, offset.z);
+		transf_manager.position = new Vector3(target.position.x, transf_manager.position.y, transf_manager.position.z);
+	}
 }

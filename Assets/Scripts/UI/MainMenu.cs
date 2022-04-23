@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
 	
 	[SerializeField] Slider audioSlider, diffSlider;//sliders
 	[SerializeField] Text audioText, diffText;//texto dos sliders
+	[SerializeField] Toggle concaveToggle;//toggle da camera concava
 	
 	//inicializa as variáveis do StaticVars
 	void Awake()
@@ -27,6 +28,8 @@ public class MainMenu : MonoBehaviour
 				else StaticVars.MainVolume = 1;
 			if(PlayerPrefs.HasKey("Difficulty"))
 				StaticVars.GameDifficulty = PlayerPrefs.GetInt("Difficulty");
+			if(PlayerPrefs.HasKey("ConcaveCamera"))
+				StaticVars.ConcaveCam = (PlayerPrefs.GetInt("ConcaveCamera") > 0);
 			
 			StaticVars.Initialized = true;
 		}
@@ -36,6 +39,8 @@ public class MainMenu : MonoBehaviour
 		audioSlider.value = StaticVars.MainVolume;
 		//define a dificuldade
 		diffSlider.value = StaticVars.GameDifficulty;
+		//define a camera concava
+		concaveToggle.isOn = StaticVars.ConcaveCam;
 	}
 	
 	void Start()
@@ -63,6 +68,7 @@ public class MainMenu : MonoBehaviour
 		PlayerPrefs.SetInt("Difficulty", StaticVars.GameDifficulty);
 		PlayerPrefs.SetInt("hScore", StaticVars.HighScore);
 		PlayerPrefs.SetInt("3d_hScore", StaticVars.HighScore3D);
+		PlayerPrefs.SetInt("ConcaveCamera", (StaticVars.ConcaveCam == true ? 1 : 0));
 		
 		PlayerPrefs.Save();
 		Application.Quit();
@@ -84,5 +90,11 @@ public class MainMenu : MonoBehaviour
 		StaticVars.GameDifficulty = (int)diff;
 		
 		diffText.text = ""+diff;
+	}
+	
+	public void ChangeConcaveCam(bool conc)
+	{
+		//define o tipo de camera
+		StaticVars.ConcaveCam = conc;
 	}
 }

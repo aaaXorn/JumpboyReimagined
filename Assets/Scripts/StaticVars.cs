@@ -12,4 +12,5 @@ public static class StaticVars
 	public static int GameDifficulty {get; set;}
 	public static int HighScore {get; set;}
 	public static int HighScore3D {get; set;}
+	public static bool ConcaveCam {get; set;}
 }
