@@ -1196,6 +1196,15 @@ MonoBehaviour:
   - tag: Predio1
     prefab: {fileID: 337824505244146772, guid: 0f435840c3d4b714f837cc39ad369387, type: 3}
     size: 20
+  - tag: Predio2
+    prefab: {fileID: 337824505244146772, guid: ffa76c7362dc00f4485a4b5c0dda1d42, type: 3}
+    size: 20
+  - tag: Predio3
+    prefab: {fileID: 337824505244146772, guid: 7c915bb477a989149bca29f50d6fb05f, type: 3}
+    size: 20
+  - tag: Predio4
+    prefab: {fileID: 337824505244146772, guid: f9af069b3f3150f47833dea31f9ee22c, type: 3}
+    size: 20
   BG_spawn_time: 0
   total_BG_spawn_time: 2
   bg_tag:
@@ -1205,6 +1214,9 @@ MonoBehaviour:
   - RBueiroSB
   predio_tag:
   - Predio1
+  - Predio2
+  - Predio3
+  - Predio4
   lanes_onStart: 10
   spawn_time: 0
   total_spawn_time: 6
