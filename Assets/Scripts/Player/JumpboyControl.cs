@@ -37,6 +37,8 @@ public class JumpboyControl : MonoBehaviour
 	
 	[SerializeField] float jump_base_force, jump_charge_force;//força base e por carregar do pulo
 	[SerializeField] float grav_mod = 1f;//modificador de gravidade
+	
+	AudioSource JumpSFX;//sound effect de pulo
 	#endregion
 	
 	#region slide
@@ -98,6 +100,8 @@ public class JumpboyControl : MonoBehaviour
 		}
 		
 		h_scr_txt.text = "HIGH SCORE " + high_score;
+		
+		JumpSFX = GetComponent<AudioSource>();
     }
 
     //pega os inputs
@@ -257,7 +261,7 @@ public class JumpboyControl : MonoBehaviour
 					hurt = false;
 					rigid.velocity = BaseVelocity;
 					
-					anim.SetTrigger("hurt");
+					anim.SetTrigger("recover");
 				}
 				
 				//socorro matematica
@@ -359,6 +363,8 @@ public class JumpboyControl : MonoBehaviour
 				//pulo
 				if(jump_holding && !jumping)
 				{
+					JumpSFX.Play();
+					
 					//força do pulo
 					rigid.AddForce(new Vector3(0, jump_base_force, 0), ForceMode.Impulse);
 
