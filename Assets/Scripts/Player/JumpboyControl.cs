@@ -17,7 +17,7 @@ public class JumpboyControl : MonoBehaviour
 	[SerializeField] Transform transf_police, transf_target;//transform do policial e do alvo
 	float rel_pos_police;//posição relativa X do policial em relação ao player
 	//velocidade exponencial decrescente quando toma hit
-	[SerializeField] float init_vel, end_vel, vel_hurt_time_mod;//vel_change;
+	[SerializeField] float init_vel, end_vel, vel_hurt_time_mod, pol_mod;//vel_change;
 	
 	bool landed = true;//se o jogador está no chão
 	
@@ -269,7 +269,7 @@ public class JumpboyControl : MonoBehaviour
 				//muda a posição do alvo da camera
 				transf_target.Translate(Vector3.right * change);
 				//muda a posição do policial
-				rel_pos_police += change;
+				rel_pos_police += change * pol_mod;
 
 				hurt_time += Time.deltaTime;
 				

@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
 	[SerializeField] AudioMixer audio_main;//mixer de volume
 	
 	[SerializeField] Slider audioSlider, diffSlider;//sliders
-	[SerializeField] Text audioText, diffText;//texto dos sliders
+	//[SerializeField] Text audioText, diffText;//texto dos sliders
 	[SerializeField] Toggle concaveToggle;//toggle da camera concava
 	
 	//inicializa as variáveis do StaticVars
@@ -85,7 +85,7 @@ public class MainMenu : MonoBehaviour
 		
 		StaticVars.MainVolume = volume;
 		
-		audioText.text = ""+Mathf.Round(volume * 100);
+		//audioText.text = ""+Mathf.Round(volume * 100);
 	}
 	
 	public void ChangeDifficulty(float diff)
@@ -93,7 +93,7 @@ public class MainMenu : MonoBehaviour
 		//define a dificuldade do jogo
 		StaticVars.GameDifficulty = (int)diff;
 		
-		diffText.text = ""+diff;
+		//diffText.text = ""+diff;
 	}
 	
 	public void ChangeConcaveCam(bool conc)
