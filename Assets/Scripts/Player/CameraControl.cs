@@ -15,7 +15,7 @@ public class CameraControl : MonoBehaviour
 
 	[SerializeField] Transform transf_manager;//chão e managers de hazard
 	
-	[SerializeField] float lensD_intensity;//intensidade da distorção de lente
+	[SerializeField] float lensD_intensity, lensD_centerY;//intensidade e centro Y da distorção de lente
 	
 	void Awake()
 	{
@@ -28,6 +28,7 @@ public class CameraControl : MonoBehaviour
 			
 			vol.profile.TryGetSettings(out lensD);
 			lensD.intensity.value = (StaticVars.ConcaveCam ? lensD_intensity : 0);
+			lensD.centerY.value = (StaticVars.ConcaveCam ? lensD_centerY : 0);
 		}
 	}
 	

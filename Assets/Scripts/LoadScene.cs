@@ -13,13 +13,15 @@ public class LoadScene : MonoBehaviour
 
     void Start()
     {
+        print(StaticVars.NextScene);
+
         //começa o load
-        StartCoroutine(LoadAsync(next_scene));
+        StartCoroutine(LoadAsync(StaticVars.NextScene));
     }
 
     IEnumerator LoadAsync(string sceneIndex)
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(next_scene);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
 
         while (!operation.isDone)
         {

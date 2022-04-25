@@ -108,6 +108,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4799546190877687042, guid: 9e39c5b2894783d4d852d657eee54d64, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: -4799546190877687042, guid: 9e39c5b2894783d4d852d657eee54d64, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10.89
+      objectReference: {fileID: 0}
+    - target: {fileID: -4799546190877687042, guid: 9e39c5b2894783d4d852d657eee54d64, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.04
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9e39c5b2894783d4d852d657eee54d64, type: 3}
       propertyPath: m_Name
       value: Predio3

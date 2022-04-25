@@ -7,6 +7,8 @@ public static class StaticVars
 {
 	//se já foram inicializadas
 	public static bool Initialized {get; set;}
+	//próxima scene a ser loadada
+	public static string NextScene { get; set;}
 	
     public static float MainVolume {get; set;}
 	public static int GameDifficulty {get; set;}

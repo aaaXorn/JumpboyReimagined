@@ -54,11 +54,15 @@ public class MainMenu : MonoBehaviour
 	//muda a cena pro modo de jogo escolhido
     public void To2D()
 	{
-		SceneManager.LoadScene("Load2D");
+		StaticVars.NextScene = "Jumpboy2D";
+
+		SceneManager.LoadScene("Load");
 	}
 	public void To3D()
 	{
-		SceneManager.LoadScene("Load3D");
+		StaticVars.NextScene = "Jumpboy3D";
+
+		SceneManager.LoadScene("Load");
 	}
 	
 	public void Exit()

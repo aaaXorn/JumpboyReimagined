@@ -36,15 +36,18 @@ public class Pause : MonoBehaviour
 	public void Restart()
 	{
 		Time.timeScale = unpaused_time;
-		
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        StaticVars.NextScene = SceneManager.GetActiveScene().name;
+
+        SceneManager.LoadScene("Load");
 	}
 
     public void MainMenu()
     {
         Time.timeScale = unpaused_time;
-		
-        SceneManager.LoadScene("LoadMenu");
+
+        StaticVars.NextScene = "MainMenu";
+        SceneManager.LoadScene("Load");
     }
 
     public void Exit()

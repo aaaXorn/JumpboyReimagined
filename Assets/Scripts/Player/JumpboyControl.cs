@@ -240,7 +240,7 @@ public class JumpboyControl : MonoBehaviour
 		rigid.AddForce(Physics.gravity * grav_mod, ForceMode.Acceleration);
 		
 		//movimento do policial
-		transf_police.position = new Vector3(transform.position.x + rel_pos_police, transf_police.position.y, transform.position.z);
+		transf_police.position = new Vector3(transform.position.x + rel_pos_police, transf_police.position.y, transform.position.z / 2);
 		
 		#region damage
 		//se tomou dano
