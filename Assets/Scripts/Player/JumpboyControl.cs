@@ -116,7 +116,7 @@ public class JumpboyControl : MonoBehaviour
 				Touch touch = Input.GetTouch(0);//pega o input de toque
 
 				//slide
-				if _3D)
+				if(_3D)
 				{
 					#region swipe
 					if (touch.phase == TouchPhase.Began)
@@ -170,65 +170,63 @@ public class JumpboyControl : MonoBehaviour
 #endif
 
 #if UNITY_EDITOR
-		if(Input.GetMouseButton(0))//se o jogador está tocando na tela
-        {
-			Vector3 mousePos = Input.mousePosition;//pega a posição do mouse
-			//slide
-			if(_3D)
-            {
-			#region swipe
-				if(Input.GetMouseButtonDown(0))
+			if(Input.GetMouseButton(0))//se o jogador está tocando na tela
+			{
+				Vector3 mousePos = Input.mousePosition;//pega a posição do mouse
+				//slide
+				if(_3D)
 				{
-					//posição inicial do swipe
-					touchStart = Input.mousePosition;
+				#region swipe
+					if(Input.GetMouseButtonDown(0))
+					{
+						//posição inicial do swipe
+						touchStart = Input.mousePosition;
+					}
+				#endregion
 				}
-			#endregion
-            }
 
-			//pulo
-			if(!sliding && (!_3D || (Input.mousePosition.y >= half_sHeight && Input.mousePosition.x >= frct_sWidth)))
-            {
-				jump_holding = true;
-            }
-        }
-        else
-        {
-			jump_holding = false;
-		}
-		
-		if(_3D && Input.GetMouseButtonUp(0))
-		{
-			//posição final do swipe
-			Vector2 touchEnd = Input.mousePosition;
-			//vetor do swipe
-			Vector3 swipe = new Vector3(touchEnd.x - touchStart.x, touchEnd.y - touchStart.y);
+				//pulo
+				if(!sliding && (!_3D || (Input.mousePosition.y >= half_sHeight && Input.mousePosition.x >= frct_sWidth)))
+				{
+					jump_holding = true;
+				}
+			}
+			else
+			{
+				jump_holding = false;
+			}
 			
-			//se o tamanho do swipe não é pequeno demais
-			if(!side_movement && lane == previous_lane && Mathf.Abs(swipe.x) >= minSwipeLength)
+			if(_3D && Input.GetMouseButtonUp(0))
 			{
-				//pra esquerda
-				if(swipe.x > 0)
-				{
-					if(lane > -1) lane--;
-				}
-				//pra direita
-				else if(swipe.x < 0)
-				{
-					if(lane < 1) lane++;
-				}
+				//posição final do swipe
+				Vector2 touchEnd = Input.mousePosition;
+				//vetor do swipe
+				Vector3 swipe = new Vector3(touchEnd.x - touchStart.x, touchEnd.y - touchStart.y);
 				
-				side_movement = true;
-			}
-			else if(!sliding && swipe.y <= -minSwipeLength)
-			{
-				sliding = true;
+				//se o tamanho do swipe não é pequeno demais
+				if(!side_movement && lane == previous_lane && Mathf.Abs(swipe.x) >= minSwipeLength)
+				{
+					//pra esquerda
+					if(swipe.x > 0)
+					{
+						if(lane > -1) lane--;
+					}
+					//pra direita
+					else if(swipe.x < 0)
+					{
+						if(lane < 1) lane++;
+					}
+					
+					side_movement = true;
+				}
+				else if(!sliding && swipe.y <= -minSwipeLength)
+				{
+					sliding = true;
 
-				slide_timer = 0;
+					slide_timer = 0;
+				}
 			}
-		}
-		
 #endif
-
 			#endregion
 		}
 	}
