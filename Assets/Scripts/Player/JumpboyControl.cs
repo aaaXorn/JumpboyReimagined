@@ -35,7 +35,9 @@ public class JumpboyControl : MonoBehaviour
 	bool jump_holding, jumping;//se o player está carregando um pulo/pulando
 	[SerializeField] float jump_charge, max_jump_charge;//carga do pulo atual e máxima
 	
-	[SerializeField] float jump_base_force, jump_charge_force;//força base e por carregar do pulo
+	//força base e por carregar do pulo, modificador de swipe máximo pro pulo carregado do 3D
+	[SerializeField] float jump_base_force, jump_charge_force, max_jump_swipe_mod;
+	float jump_swipe_mod;
 	[SerializeField] float grav_mod = 1f;//modificador de gravidade
 	
 	AudioSource JumpSFX;//sound effect de pulo
@@ -153,11 +155,17 @@ public class JumpboyControl : MonoBehaviour
 
 							slide_timer = 0;
 						}
+						else if(!sliding && swipe.y >= minSwipeLength)
+						{
+							jump_holding = true;
+							
+							jump_swipe_mod = (swipe.y - minSwipeLength) / 200f;
+						}
 					}
 					#endregion
 				}
 				//pulo
-				if (!sliding && (!_3D || (touch.position.y >= half_sHeight && touch.position.x >= frct_sWidth)))
+				if (!sliding && (!_3D))
 				{
 					jump_holding = true;
 					sliding = false;
@@ -185,8 +193,8 @@ public class JumpboyControl : MonoBehaviour
 				#endregion
 				}
 
-				//pulo
-				if(!sliding && (!_3D || (Input.mousePosition.y >= half_sHeight && Input.mousePosition.x >= frct_sWidth)))
+				//pulo 2D
+				if(!sliding && !_3D)//(!_3D || (Input.mousePosition.y >= half_sHeight && Input.mousePosition.x >= frct_sWidth)))
 				{
 					jump_holding = true;
 				}
@@ -224,6 +232,12 @@ public class JumpboyControl : MonoBehaviour
 					sliding = true;
 
 					slide_timer = 0;
+				}
+				else if(!sliding && swipe.y >= minSwipeLength)
+				{
+					jump_holding = true;
+					
+					jump_swipe_mod = (swipe.y - minSwipeLength) / 200f;
 				}
 			}
 #endif
@@ -362,13 +376,25 @@ public class JumpboyControl : MonoBehaviour
 				if(jump_holding && !jumping)
 				{
 					JumpSFX.Play();
-					
-					//força do pulo
-					rigid.AddForce(new Vector3(0, jump_base_force, 0), ForceMode.Impulse);
 
-					jumping = true;
-					//reseta o charge do pulo
-					jump_charge = 0;
+					if(!_3D)
+					{
+						//força do pulo
+						rigid.AddForce(new Vector3(0, jump_base_force, 0), ForceMode.Impulse);
+						
+						jumping = true;
+						//reseta o charge do pulo
+						jump_charge = 0;
+					}
+					else
+					{
+						print(jump_swipe_mod);
+						//determina a carga do pulo
+						float swipe_force = jump_charge_force * jump_swipe_mod;
+						
+						//força do pulo
+						rigid.AddForce(new Vector3(0, jump_base_force + swipe_force, 0), ForceMode.Impulse);
+					}
 				}
 			}
 		}

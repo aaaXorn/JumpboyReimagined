@@ -85,8 +85,6 @@ public class CameraControl : MonoBehaviour
 			text_fps.text = "FPS: " + current_frame;
 
 			fps_counter_time = 0;
-
-			print("a");
 		}
 	}
 }

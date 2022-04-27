@@ -915,12 +915,13 @@ MonoBehaviour:
   land_init_height: 0.2
   jump_charge: 0
   max_jump_charge: 1
-  jump_base_force: 7
+  jump_base_force: 10
   jump_charge_force: 1.5
-  grav_mod: 1.5
+  max_jump_swipe_mod: 1.5
+  grav_mod: 2
   max_slide: 1
   head_col: {fileID: 1082188711}
-  minSwipeLength: 200
+  minSwipeLength: 175
   lane_pos:
   - -3.5
   - 0
