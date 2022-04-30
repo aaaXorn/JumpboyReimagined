@@ -116,6 +116,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Predio4
       objectReference: {fileID: 0}
+    - target: {fileID: 6368018337251365068, guid: 8462f352cfd604e44baa358ec2b78f6d, type: 3}
+      propertyPath: m_Name
+      value: "Pr\xE9dio 4 Teto"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8462f352cfd604e44baa358ec2b78f6d, type: 3}
 --- !u!4 &1096495155438149816 stripped
