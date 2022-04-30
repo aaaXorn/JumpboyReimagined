@@ -81,8 +81,8 @@ public class CameraControl : MonoBehaviour
 		if (fps_counter_time > 1)
 		{
 			//mostra o FPS
-			int current_frame = (int)(1f / Time.unscaledDeltaTime);
-			text_fps.text = "FPS: " + current_frame;
+			int current_frame = (int)(10f / Time.unscaledDeltaTime);
+			text_fps.text = "FPS: " + (float)current_frame/10f;
 
 			fps_counter_time = 0;
 		}

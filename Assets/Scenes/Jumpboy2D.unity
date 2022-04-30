@@ -6158,6 +6158,7 @@ MonoBehaviour:
   - Arvore2
   predio_tag: []
   lanes_onStart: 0
+  misc_tag: []
   spawn_time: 0
   total_spawn_time: 6
   spawn_time_mod: 0
@@ -6720,9 +6721,10 @@ MonoBehaviour:
   land_init_height: 0.1
   jump_charge: 0
   max_jump_charge: 0.5
-  jump_base_force: 10
-  jump_charge_force: 2
-  grav_mod: 2
+  jump_base_force: 13
+  jump_charge_force: 2.5
+  max_jump_swipe_mod: 0
+  grav_mod: 3
   max_slide: 0
   head_col: {fileID: 2001538267}
   minSwipeLength: 0

@@ -30,6 +30,9 @@ public class HazardManager : MonoBehaviour
 	[SerializeField] int lanes_onStart;//quantas lanes de rua/prédio tem quando o jogo inicia
 	Quaternion predio2_rot;
 	
+	int misc_obj;//numero de objetos misc de background pro 3D
+	[SerializeField] string[] misc_tag;//array desses objetos
+	
 	[Header("Obstaculos")]//obstaculos spawnados
 	//tempo de spawn atual e maximo
 	[SerializeField] float spawn_time, total_spawn_time;
@@ -41,7 +44,7 @@ public class HazardManager : MonoBehaviour
 	[SerializeField] string[] hz_tag;//array de tags de hazard
 	[SerializeField] Transform SpawnPos, BG_SpawnPos;//posição que os obstaculos spawnam
 	int bg_loop;//numero de vezes que a rua spawnou
-
+	
 	[SerializeField] JumpboyControl JC;//script do jumpboy
 	
     void Awake()
@@ -73,6 +76,7 @@ public class HazardManager : MonoBehaviour
 		if(_3D)
 		{
 			predio_obj = predio_tag.Length;
+			misc_obj = misc_tag.Length;
 			
 			//rotação do predio 2, pra ele ficar do outro lado
 			predio2_rot = new Quaternion(transform.rotation.x, 180, transform.rotation.z, transform.rotation.w);
@@ -216,8 +220,21 @@ public class HazardManager : MonoBehaviour
 			//cria o outro obj de predio
 			SpawnFromPool(tag, pos_bg, predio2_rot).SetActive(true);
 			
+			if(bg_loop % 3 == 0)
+			{
+				no = Random.Range(0, misc_obj);
+				tag = misc_tag[no];
+				//cria um objeto misc (banco/poste)
+				SpawnFromPool(tag, pos_bg, transform.rotation).SetActive(true);
+				//aleatoriza o outro objeto
+				no = Random.Range(0, misc_obj);
+				tag = misc_tag[no];
+				//cria o outro objeto
+				SpawnFromPool(tag, pos_bg, predio2_rot).SetActive(true);
+			}
+			
 			bg_loop++;
-
+			
 			if (bg_loop < 20)
 			{
 				if (bg_loop % 3 == 0)
