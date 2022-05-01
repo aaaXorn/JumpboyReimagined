@@ -7,7 +7,7 @@ Shader "Custom/StandardCurvedAlpha" {
 		_Curvature("Curvature", Range(0, 0.1)) = 0.01
 	}
 		SubShader{
-			Tags { "Queue"="Transparent" "RenderType"="Transparent" }//tag de transparência
+			Tags { "RenderType"="Transparent" }//"Queue"="Transparent" "RenderType"="Transparent" }//tag de transparência
 			LOD 200
 
 			CGPROGRAM

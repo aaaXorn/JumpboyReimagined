@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2025407995231278821}
   - component: {fileID: 5201390902468898599}
+  - component: {fileID: 8517026974254858635}
   m_Layer: 6
   m_Name: Cone
   m_TagString: Hazard
@@ -45,6 +46,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &8517026974254858635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8287033675854940277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d9d066ba2d810c4a942de58be1f69db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1523996067609085149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -107,7 +120,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 9b185605c8271cd4ab80b7b388af6cda, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -876546973899608171, guid: 9b185605c8271cd4ab80b7b388af6cda, type: 3}
+      objectReference: {fileID: 2100000, guid: d967b0d334bea6d43907f47908f66a50, type: 2}
     - target: {fileID: 919132149155446097, guid: 9b185605c8271cd4ab80b7b388af6cda, type: 3}
       propertyPath: m_Name
       value: Cone
