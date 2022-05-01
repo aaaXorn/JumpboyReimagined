@@ -6725,6 +6725,8 @@ MonoBehaviour:
   jump_charge_force: 2.5
   max_jump_swipe_mod: 0
   grav_mod: 3
+  JumpSFX: {fileID: 8300000, guid: e2f2bbca752b2df4780397770cc2b0d0, type: 3}
+  SlideSFX: {fileID: 0}
   max_slide: 0
   head_col: {fileID: 2001538267}
   minSwipeLength: 0

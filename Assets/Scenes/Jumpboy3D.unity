@@ -1025,7 +1025,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 7e83f7a79231e2f43baaaf68acd49bba, type: 2}
-  m_audioClip: {fileID: 8300000, guid: e2f2bbca752b2df4780397770cc2b0d0, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1175,10 +1175,12 @@ MonoBehaviour:
   land_init_height: 0.2
   jump_charge: 0
   max_jump_charge: 1
-  jump_base_force: 10
+  jump_base_force: 14
   jump_charge_force: 1.5
-  max_jump_swipe_mod: 1.5
-  grav_mod: 2
+  max_jump_swipe_mod: 3
+  grav_mod: 3
+  JumpSFX: {fileID: 8300000, guid: e2f2bbca752b2df4780397770cc2b0d0, type: 3}
+  SlideSFX: {fileID: 8300000, guid: b2749ea6cd793a444aa4578e510d214f, type: 3}
   max_slide: 1
   head_col: {fileID: 1082188711}
   minSwipeLength: 175

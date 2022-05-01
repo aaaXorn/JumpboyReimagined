@@ -40,7 +40,8 @@ public class JumpboyControl : MonoBehaviour
 	float jump_swipe_mod;
 	[SerializeField] float grav_mod = 1f;//modificador de gravidade
 	
-	AudioSource JumpSFX;//sound effect de pulo
+	AudioSource AudioS;//componente que faz o som
+	[SerializeField] AudioClip JumpSFX, SlideSFX;//sound effect de pulo e slide
 	#endregion
 	
 	#region slide
@@ -103,7 +104,7 @@ public class JumpboyControl : MonoBehaviour
 		
 		h_scr_txt.text = "HIGH SCORE " + high_score;
 		
-		JumpSFX = GetComponent<AudioSource>();
+		AudioS = GetComponent<AudioSource>();
     }
 
     //pega os inputs
@@ -355,7 +356,13 @@ public class JumpboyControl : MonoBehaviour
 			if(_3D && sliding)
 			{
 				//tira a hurtbox da cabeça
-				if(head_col.enabled) head_col.enabled = false;
+				if(head_col.enabled)
+				{
+					head_col.enabled = false;
+					
+					AudioS.clip = SlideSFX;
+					AudioS.Play();
+				}
 
 				//reseta o timer do pulo
 				jump_charge = 0;
@@ -375,7 +382,8 @@ public class JumpboyControl : MonoBehaviour
 				//pulo
 				if(jump_holding && !jumping)
 				{
-					JumpSFX.Play();
+					AudioS.clip = JumpSFX;
+					AudioS.Play();
 
 					if(!_3D)
 					{
