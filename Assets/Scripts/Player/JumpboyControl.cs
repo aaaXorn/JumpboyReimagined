@@ -36,8 +36,8 @@ public class JumpboyControl : MonoBehaviour
 	[SerializeField] float jump_charge, max_jump_charge;//carga do pulo atual e máxima
 	
 	//força base e por carregar do pulo, modificador de swipe máximo pro pulo carregado do 3D
-	[SerializeField] float jump_base_force, jump_charge_force, max_jump_swipe_mod;
-	float jump_swipe_mod;
+	[SerializeField] float jump_base_force, jump_charge_force;//, max_jump_swipe_mod;
+	//float jump_swipe_mod;
 	[SerializeField] float grav_mod = 1f;//modificador de gravidade
 	
 	AudioSource AudioS;//componente que faz o som
@@ -56,6 +56,7 @@ public class JumpboyControl : MonoBehaviour
 	#region swipe
 	[Header("Swipe")]
 	[SerializeField] float minSwipeLength;//mínimo pra contar como swipe
+	bool swiping;
 	Vector2 touchStart;//começo do swipe
 	
 	int lane, previous_lane;//qual o player vai se mover para e anterior
@@ -126,8 +127,10 @@ public class JumpboyControl : MonoBehaviour
 					{
 						//posição inicial do swipe
 						touchStart = touch.position;
+						
+						swiping = true;
 					}
-					else if (touch.phase == TouchPhase.Ended)
+					else if (swiping && touch.phase == TouchPhase.Moved)//touch == TouchPhase.Ended)
 					{
 						//posição final do swipe
 						Vector2 touchEnd = touch.position;
@@ -149,20 +152,27 @@ public class JumpboyControl : MonoBehaviour
 							}
 
 							side_movement = true;
+							
+							swiping = false;
 						}
 						else if (!sliding && swipe.y <= -minSwipeLength)
 						{
 							sliding = true;
 
 							slide_timer = 0;
+							
+							swiping = false;
 						}
 						else if(!sliding && swipe.y >= minSwipeLength)
 						{
 							jump_holding = true;
 							
-							jump_swipe_mod = (swipe.y - minSwipeLength) / 200f;
+							//jump_swipe_mod = (swipe.y - minSwipeLength) / 200f;
+							
+							swiping = false;
 						}
 					}
+					else if(!swiping) jump_holding = false;
 					#endregion
 				}
 				//pulo
@@ -190,7 +200,54 @@ public class JumpboyControl : MonoBehaviour
 					{
 						//posição inicial do swipe
 						touchStart = Input.mousePosition;
+						
+						swiping = true;
 					}
+					
+					if(swiping)
+					{
+						//posição final do swipe
+						Vector2 touchEnd = Input.mousePosition;
+						
+						//vetor do swipe
+						Vector3 swipe = new Vector3(touchEnd.x - touchStart.x, touchEnd.y - touchStart.y);
+						
+						//se o tamanho do swipe não é pequeno demais
+						if(!side_movement && lane == previous_lane && Mathf.Abs(swipe.x) >= minSwipeLength)
+						{
+							//pra esquerda
+							if(swipe.x > 0)
+							{
+								if(lane > -1) lane--;
+							}
+							//pra direita
+							else if(swipe.x < 0)
+							{
+								if(lane < 1) lane++;
+							}
+							
+							side_movement = true;
+							
+							swiping = false;
+						}
+						else if(!sliding && swipe.y <= -minSwipeLength)
+						{
+							sliding = true;
+
+							slide_timer = 0;
+							
+							swiping = false;
+						}
+						else if(!sliding && swipe.y >= minSwipeLength)
+						{
+							jump_holding = true;
+							
+							swiping = false;
+							
+							//jump_swipe_mod = (swipe.y - minSwipeLength) / 200f;
+						}
+					}
+					else jump_holding = false;
 				#endregion
 				}
 
@@ -204,11 +261,18 @@ public class JumpboyControl : MonoBehaviour
 			{
 				jump_holding = false;
 			}
-			
+			/*
 			if(_3D && Input.GetMouseButtonUp(0))
 			{
 				//posição final do swipe
 				Vector2 touchEnd = Input.mousePosition;
+			}
+			
+			if(_3D && swiping && Input.GetMouseButton(0))
+			{
+				//posição final do swipe
+				Vector2 touchEnd = Input.mousePosition;
+				
 				//vetor do swipe
 				Vector3 swipe = new Vector3(touchEnd.x - touchStart.x, touchEnd.y - touchStart.y);
 				
@@ -227,20 +291,26 @@ public class JumpboyControl : MonoBehaviour
 					}
 					
 					side_movement = true;
+					
+					swiping = false;
 				}
 				else if(!sliding && swipe.y <= -minSwipeLength)
 				{
 					sliding = true;
 
 					slide_timer = 0;
+					
+					swiping = false;
 				}
 				else if(!sliding && swipe.y >= minSwipeLength)
 				{
 					jump_holding = true;
 					
-					jump_swipe_mod = (swipe.y - minSwipeLength) / 200f;
+					swiping = false;
+					
+					//jump_swipe_mod = (swipe.y - minSwipeLength) / 200f;
 				}
-			}
+			}*/
 #endif
 			#endregion
 		}
@@ -396,12 +466,12 @@ public class JumpboyControl : MonoBehaviour
 					}
 					else
 					{
-						print(jump_swipe_mod);
+						//print(jump_swipe_mod);
 						//determina a carga do pulo
-						float swipe_force = jump_charge_force * jump_swipe_mod;
+						//float swipe_force = jump_charge_force * jump_swipe_mod;
 						
 						//força do pulo
-						rigid.AddForce(new Vector3(0, jump_base_force + swipe_force, 0), ForceMode.Impulse);
+						rigid.AddForce(new Vector3(0, jump_base_force, 0), ForceMode.Impulse);// + swipe_force, 0), ForceMode.Impulse);
 					}
 				}
 			}

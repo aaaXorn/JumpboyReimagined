@@ -1175,9 +1175,8 @@ MonoBehaviour:
   land_init_height: 0.2
   jump_charge: 0
   max_jump_charge: 1
-  jump_base_force: 14
+  jump_base_force: 15.5
   jump_charge_force: 1.5
-  max_jump_swipe_mod: 3
   grav_mod: 3
   JumpSFX: {fileID: 8300000, guid: e2f2bbca752b2df4780397770cc2b0d0, type: 3}
   SlideSFX: {fileID: 8300000, guid: b2749ea6cd793a444aa4578e510d214f, type: 3}
