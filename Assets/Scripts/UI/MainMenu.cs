@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
 	//[SerializeField] Text audioText, diffText;//texto dos sliders
 	[SerializeField] Toggle concaveToggle;//toggle da camera concava
 	
-	[SerializeField] GameObject Obj_H2P;//objeto da tela de how to play
+	[SerializeField] GameObject Obj_H2P, Obj_Opt;//objeto da tela de how to play e de opções
 	
 	//inicializa as variáveis do StaticVars
 	void Awake()
@@ -107,5 +107,14 @@ public class MainMenu : MonoBehaviour
 	public void HowToPlay()
 	{
 		Obj_H2P.SetActive(!Obj_H2P.activeSelf);
+		
+		if(Obj_Opt.activeSelf) Obj_Opt.SetActive(false);
+	}
+	
+	public void Options()
+	{
+		Obj_Opt.SetActive(!Obj_Opt.activeSelf);
+		
+		if(Obj_H2P.activeSelf) Obj_H2P.SetActive(false);
 	}
 }
