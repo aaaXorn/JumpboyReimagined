@@ -16,7 +16,7 @@ public class CameraControl : MonoBehaviour
 
 	[SerializeField] Transform transf_manager;//chão e managers de hazard
 	
-	[SerializeField] float lensD_intensity, lensD_centerY;//intensidade e centro Y da distorção de lente
+	//[SerializeField] float lensD_intensity, lensD_centerY;//intensidade e centro Y da distorção de lente
 
 	[SerializeField] Text text_fps;
 	float fps_counter_time;//timer do contador de FPS pra não ficar no modo eplepsia
@@ -26,7 +26,7 @@ public class CameraControl : MonoBehaviour
 		QualitySettings.vSyncCount = 0;
 		Application.targetFrameRate = -1;
 
-		if(_3D)
+		/*if(_3D)
 		{
 			//pega o post process volume
 			PostProcessVolume vol = GetComponent<PostProcessVolume>();
@@ -36,7 +36,7 @@ public class CameraControl : MonoBehaviour
 			vol.profile.TryGetSettings(out lensD);
 			lensD.intensity.value = (StaticVars.ConcaveCam ? lensD_intensity : 0);
 			lensD.centerY.value = (StaticVars.ConcaveCam ? lensD_centerY : 0);
-		}
+		}*/
 
 		//mostra o FPS
 		int current_frame = (int)(1f / Time.unscaledDeltaTime);
